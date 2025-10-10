@@ -1,3 +1,795 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toko Online Modern - Pilih Versi</title>
+<style>
+/* ========== VARIABLES ========== */
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #ec4899;
+  --success: #10b981;
+  --danger: #ef4444;
+  --bg-light: #f8fafc;
+  --bg-dark: #0f172a;
+  --card-light: #ffffff;
+  --card-dark: #1e293b;
+  --text-light: #0f172a;
+  --text-dark: #f1f5f9;
+  --shadow: 0 20px 50px rgba(0,0,0,0.1);
+  --radius: 16px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg: var(--bg-dark);
+  --card: var(--card-dark);
+  --text: var(--text-dark);
+  --text-muted: #94a3b8;
+}
+
+[data-theme="light"] {
+  --bg: var(--bg-light);
+  --card: var(--card-light);
+  --text: var(--text-light);
+  --text-muted: #64748b;
+}
+
+/* ========== BASE ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: var(--transition);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.fade-in { animation: fadeIn 0.6s ease; }
+.slide-in { animation: slideIn 0.6s ease; }
+.scale-up { animation: scaleUp 0.5s ease; }
+
+/* ========== SECTIONS ========== */
+.section {
+  display: none;
+  min-height: 100vh;
+}
+
+.section.active {
+  display: block;
+  animation: fadeIn 0.6s ease;
+}
+
+/* ========== LANDING PAGE ========== */
+.landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.landing::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.landing-content {
+  text-align: center;
+  z-index: 1;
+  color: white;
+  padding: 40px;
+}
+
+.landing h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  animation: fadeIn 1s ease;
+}
+
+.landing p {
+  font-size: 1.3rem;
+  margin-bottom: 50px;
+  opacity: 0.95;
+  animation: fadeIn 1.2s ease;
+}
+
+.choice-buttons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: scaleUp 1.4s ease;
+}
+
+.choice-btn {
+  padding: 20px 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.choice-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.choice-btn:hover::before {
+  left: 100%;
+}
+
+.choice-btn.web-a {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.choice-btn.web-b {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.choice-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+/* ========== HEADER ========== */
+.header {
+  background: var(--card);
+  padding: 20px 0;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  animation: slideIn 0.5s ease;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.6);
+}
+
+.btn-ghost {
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--text-muted);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.btn-back {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.6);
+}
+
+/* ========== PRODUCTS ========== */
+.products-section {
+  padding: 50px 0;
+}
+
+.products-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-weight: 900;
+  animation: fadeIn 0.7s ease;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  animation: fadeIn 0.9s ease;
+}
+
+.product-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.product-price {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.product-desc {
+  color: var(--text-muted);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.product-card .btn {
+  width: 100%;
+}
+
+/* ========== MODAL ========== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--card);
+  border-radius: var(--radius);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: scaleUp 0.4s ease;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+  position: relative;
+  height: 300px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.5);
+}
+
+.modal-close:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: #dc2626;
+}
+
+.modal-body {
+  padding: 30px;
+}
+
+.modal-body h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.modal-body .price {
+  font-size: 2rem;
+  color: var(--primary);
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.modal-body .description {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.modal-body .features {
+  margin-top: 20px;
+}
+
+.modal-body .features h4 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.modal-body .features ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.modal-body .features li {
+  padding: 8px 0;
+  color: var(--text-muted);
+}
+
+.modal-body .features li::before {
+  content: '✓ ';
+  color: var(--success);
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .landing h1 {
+    font-size: 2.5rem;
+  }
+
+  .landing p {
+    font-size: 1.1rem;
+  }
+
+  .choice-buttons {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .choice-btn {
+    padding: 15px 40px;
+    font-size: 1rem;
+  }
+
+  .products-section h2 {
+    font-size: 2rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}
+
+/* ========== WEB A GRADIENT ========== */
+.web-a .products-section {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe5f0 100%);
+}
+
+[data-theme="dark"] .web-a .products-section {
+  background: linear-gradient(135deg, #1e1b2e 0%, #2d1b3d 100%);
+}
+
+/* ========== WEB B GRADIENT ========== */
+.web-b .products-section {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+[data-theme="dark"] .web-b .products-section {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+</style>
+</head>
+<body data-theme="light">
+
+<!-- ========== LANDING SECTION ========== -->
+<div id="landing" class="section active landing">
+  <div class="landing-content">
+    <h1>🛍️ Toko Online Modern</h1>
+    <p>Pilih versi website yang ingin Anda kunjungi</p>
+    <div class="choice-buttons">
+      <button class="choice-btn web-a" onclick="navigateTo('web-a')">
+        🌸 Masuk ke Web A
+      </button>
+      <button class="choice-btn web-b" onclick="navigateTo('web-b')">
+        💎 Masuk ke Web B
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== WEB A SECTION ========== -->
+<div id="web-a" class="section web-a">
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <div class="logo">🌸</div>
+          <span class="brand-name">Toko Elegance</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-back" onclick="navigateTo('landing')">
+            ← Kembali
+          </button>
+          <button class="btn btn-ghost" onclick="toggleTheme()">
+            <span id="theme-icon-a">🌙</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="products-section">
+    <div class="container">
+      <h2>Produk Pilihan Web A</h2>
+      <div class="products-grid" id="products-a"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== WEB B SECTION ========== -->
+<div id="web-b" class="section web-b">
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <div class="logo">💎</div>
+          <span class="brand-name">Toko Premium</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-back" onclick="navigateTo('landing')">
+            ← Kembali
+          </button>
+          <button class="btn btn-ghost" onclick="toggleTheme()">
+            <span id="theme-icon-b">🌙</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="products-section">
+    <div class="container">
+      <h2>Produk Pilihan Web B</h2>
+      <div class="products-grid" id="products-b"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== MODAL ========== -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <img id="modal-img" class="modal-image" src="" alt="">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3 id="modal-name"></h3>
+      <div class="price" id="modal-price"></div>
+      <div class="description" id="modal-desc"></div>
+      <div class="features">
+        <h4>Fitur Produk:</h4>
+        <ul id="modal-features"></ul>
+      </div>
+      <button class="btn btn-primary" onclick="buyProduct()">
+        🛒 Beli Sekarang
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-document.write(unescape('%3C%21doctype%20html%3E%0A%3Chtml%20lang%3D%22id%22%3E%0A%3Chead%3E%0A%3Cmeta%20charset%3D%22utf-8%22/%3E%0A%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2Cinitial-scale%3D1%22/%3E%0A%3Ctitle%3EIkkonStore%3C/title%3E%0A%3Cstyle%3E%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20VARIABLES%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A%3Aroot%7B%0A%20%20--primary%3A%236366f1%3B--primary-dark%3A%234f46e5%3B--primary-light%3A%23818cf8%3B%0A%20%20--secondary%3A%23ec4899%3B--secondary-dark%3A%23db2777%3B%0A%20%20--success%3A%2310b981%3B--danger%3A%23ef4444%3B--warning%3A%23f59e0b%3B--info%3A%233b82f6%3B%0A%20%20--bg-gradient-1%3A%23667eea%3B--bg-gradient-2%3A%23764ba2%3B--bg-gradient-3%3A%23f093fb%3B%0A%20%20--card-bg%3Argba%28255%2C255%2C255%2C0.95%29%3B--card-border%3Argba%28255%2C255%2C255%2C0.25%29%3B%0A%20%20--text%3A%230f172a%3B--text-secondary%3A%23475569%3B--text-muted%3A%2364748b%3B%0A%20%20--radius%3A18px%3B--shadow%3A0%2025px%2070px%20rgba%2815%2C23%2C42%2C0.12%29%3B%0A%20%20--glass-blur%3Ablur%2824px%29%20saturate%28200%25%29%3B%0A%20%20--transition%3Aall%200.35s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%7D%0Ahtml%5Bdata-theme%3D%22dark%22%5D%7B%0A%20%20--bg-gradient-1%3A%231e3a8a%3B--bg-gradient-2%3A%23312e81%3B--bg-gradient-3%3A%23581c87%3B%0A%20%20--card-bg%3Argba%2830%2C41%2C59%2C0.9%29%3B--card-border%3Argba%28255%2C255%2C255%2C0.12%29%3B%0A%20%20--text%3A%23f1f5f9%3B--text-secondary%3A%23cbd5e1%3B--text-muted%3A%2394a3b8%3B%0A%20%20--shadow%3A0%2025px%2070px%20rgba%280%2C0%2C0%2C0.5%29%3B%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20BASE%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A*%7Bbox-sizing%3Aborder-box%3Bmargin%3A0%3Bpadding%3A0%7D%0A%3A%3Aselection%7Bbackground%3Avar%28--primary%29%3Bcolor%3A%23fff%7D%0Abody%7B%0A%20%20font-family%3A%27Inter%27%2C-apple-system%2CBlinkMacSystemFont%2C%27Segoe%20UI%27%2CRoboto%2Csans-serif%3B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--bg-gradient-1%29%200%25%2Cvar%28--bg-gradient-2%29%2050%25%2Cvar%28--bg-gradient-3%29%20100%25%29%3B%0A%20%20background-attachment%3Afixed%3B%0A%20%20color%3Avar%28--text%29%3Bmin-height%3A100vh%3B%0A%20%20transition%3Abackground%200.4s%3B%0A%20%20overflow-x%3Ahidden%3B%0A%7D%0Abutton%7Bcursor%3Apointer%3Bborder%3Anone%3Boutline%3Anone%3Bfont-family%3Ainherit%7D%0Aimg%7Buser-select%3Anone%3B-webkit-user-drag%3Anone%7D%0A.container%7Bmax-width%3A1240px%3Bmargin%3A0%20auto%3Bpadding%3A24px%2020px%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20GLASS%20EFFECT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.glass%7B%0A%20%20background%3Avar%28--card-bg%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20-webkit-backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20border%3A1px%20solid%20var%28--card-border%29%3B%0A%20%20box-shadow%3Avar%28--shadow%29%3B%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20HEADER%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.header%7B%0A%20%20position%3Asticky%3Btop%3A0%3Bz-index%3A60%3B%0A%20%20padding%3A18px%2024px%3Bmargin-bottom%3A28px%3B%0A%20%20animation%3AslideDown%200.6s%20ease%3B%0A%7D%0A@keyframes%20slideDown%7Bfrom%7Bopacity%3A0%3Btransform%3AtranslateY%28-20px%29%7Dto%7Bopacity%3A1%3Btransform%3AtranslateY%280%29%7D%7D%0A.header-inner%7B%0A%20%20max-width%3A1240px%3Bmargin%3A0%20auto%3B%0A%20%20display%3Aflex%3Bjustify-content%3Aspace-between%3Balign-items%3Acenter%3Bgap%3A16px%3B%0A%7D%0A.brand%7Bdisplay%3Aflex%3Balign-items%3Acenter%3Bgap%3A16px%3Bcursor%3Apointer%7D%0A.logo%7B%0A%20%20width%3A56px%3Bheight%3A56px%3Bborder-radius%3A18px%3B%0A%20%20background%3Alinear-gradient%28135deg%2C%23f093fb%200%25%2C%23f5576c%20100%25%29%3B%0A%20%20display%3Aflex%3Balign-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20box-shadow%3A0%2012px%2035px%20rgba%28245%2C87%2C108%2C0.55%29%2C0%200%200%204px%20rgba%28245%2C87%2C108%2C0.15%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20overflow%3Ahidden%3B%0A%20%20border%3A3px%20solid%20rgba%28255%2C255%2C255%2C0.3%29%3B%0A%7D%0A.logo%20img%7B%0A%20%20width%3A100%25%3Bheight%3A100%25%3Bobject-fit%3Acover%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.logo%3Ahover%7Btransform%3Ascale%281.08%29%20rotate%28-5deg%29%7D%0A.logo%3Ahover%20img%7Btransform%3Ascale%281.15%29%7D%0A.brand-text%20.title%7B%0A%20%20font-weight%3A900%3Bfont-size%3A24px%3Bletter-spacing%3A-1px%3Bline-height%3A1.2%3B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--secondary%29%29%3B%0A%20%20-webkit-background-clip%3Atext%3B%0A%20%20-webkit-text-fill-color%3Atransparent%3B%0A%20%20background-clip%3Atext%3B%0A%7D%0A.brand-text%20.subtitle%7Bfont-size%3A13px%3Bcolor%3Avar%28--text-muted%29%3Bmargin-top%3A3px%3Bfont-weight%3A600%3Bletter-spacing%3A0.3px%7D%0A.header-actions%7Bdisplay%3Aflex%3Bgap%3A12px%3Balign-items%3Acenter%3Bflex-wrap%3Awrap%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20BUTTONS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.btn%7B%0A%20%20padding%3A12px%2022px%3Bborder-radius%3A14px%3B%0A%20%20display%3Ainline-flex%3Balign-items%3Acenter%3Bgap%3A10px%3B%0A%20%20font-weight%3A700%3Bfont-size%3A14px%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20position%3Arelative%3Boverflow%3Ahidden%3B%0A%20%20text-transform%3Auppercase%3Bletter-spacing%3A0.3px%3B%0A%7D%0A.btn%3A%3Abefore%7B%0A%20%20content%3A%27%27%3Bposition%3Aabsolute%3Binset%3A0%3B%0A%20%20background%3Alinear-gradient%28135deg%2Crgba%28255%2C255%2C255%2C0.3%29%2Ctransparent%29%3B%0A%20%20transform%3AtranslateX%28-100%25%29%3B%0A%20%20transition%3Atransform%200.4s%3B%0A%7D%0A.btn%3Ahover%3A%3Abefore%7Btransform%3AtranslateX%28100%25%29%7D%0A.btn%3Aactive%7Btransform%3Ascale%280.96%29%7D%0A.btn.primary%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%200%25%2Cvar%28--primary-dark%29%20100%25%29%3B%0A%20%20color%3A%23fff%3Bbox-shadow%3A0%2014px%2040px%20rgba%2899%2C102%2C241%2C0.5%29%3B%0A%7D%0A.btn.primary%3Ahover%7Bbox-shadow%3A0%2018px%2050px%20rgba%2899%2C102%2C241%2C0.7%29%3Btransform%3AtranslateY%28-3px%29%7D%0A.btn.ghost%7B%0A%20%20background%3Avar%28--card-bg%29%3Bcolor%3Avar%28--text%29%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%7D%0A.btn.ghost%3Ahover%7Bbackground%3Argba%28255%2C255%2C255%2C0.98%29%3Btransform%3AtranslateY%28-2px%29%7D%0Ahtml%5Bdata-theme%3D%22dark%22%5D%20.btn.ghost%3Ahover%7Bbackground%3Argba%2830%2C41%2C59%2C0.98%29%7D%0A.btn.danger%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--danger%29%2C%23dc2626%29%3Bcolor%3A%23fff%3B%0A%20%20box-shadow%3A0%2014px%2040px%20rgba%28239%2C68%2C68%2C0.4%29%3B%0A%7D%0A.btn.danger%3Ahover%7Bbox-shadow%3A0%2018px%2050px%20rgba%28239%2C68%2C68%2C0.6%29%3Btransform%3AtranslateY%28-3px%29%7D%0A.btn.info%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--info%29%2C%232563eb%29%3Bcolor%3A%23fff%3B%0A%20%20box-shadow%3A0%2014px%2040px%20rgba%2859%2C130%2C246%2C0.5%29%3B%0A%7D%0A.btn.info%3Ahover%7Bbox-shadow%3A0%2018px%2050px%20rgba%2859%2C130%2C246%2C0.7%29%3Btransform%3AtranslateY%28-3px%29%7D%0A.badge%7B%0A%20%20min-width%3A24px%3Bheight%3A24px%3Bpadding%3A0%208px%3B%0A%20%20border-radius%3A12px%3Bbackground%3Avar%28--danger%29%3Bcolor%3A%23fff%3B%0A%20%20font-size%3A12px%3Bfont-weight%3A800%3B%0A%20%20display%3Ainline-flex%3Balign-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20animation%3Apulse%202.5s%20infinite%3B%0A%20%20box-shadow%3A0%204px%2012px%20rgba%28239%2C68%2C68%2C0.4%29%3B%0A%7D%0A@keyframes%20pulse%7B0%25%2C100%25%7Btransform%3Ascale%281%29%3Bbox-shadow%3A0%204px%2012px%20rgba%28239%2C68%2C68%2C0.4%29%7D50%25%7Btransform%3Ascale%281.1%29%3Bbox-shadow%3A0%200%200%208px%20rgba%28239%2C68%2C68%2C0%29%7D%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20TABS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.tabs%7Bdisplay%3Aflex%3Bgap%3A12px%3Bmargin-bottom%3A28px%3Bflex-wrap%3Awrap%7D%0A.tab-btn%7B%0A%20%20padding%3A14px%2026px%3Bborder-radius%3A999px%3B%0A%20%20font-weight%3A700%3Bfont-size%3A14px%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20text-transform%3Auppercase%3Bletter-spacing%3A0.5px%3B%0A%7D%0A.tab-btn%3Anot%28.active%29%7B%0A%20%20background%3Avar%28--card-bg%29%3Bcolor%3Avar%28--text-muted%29%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%7D%0A.tab-btn.active%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--primary-dark%29%29%3B%0A%20%20color%3A%23fff%3Bborder%3Anone%3B%0A%20%20box-shadow%3A0%2012px%2035px%20rgba%2899%2C102%2C241%2C0.5%29%3B%0A%20%20transform%3AtranslateY%28-3px%29%3B%0A%7D%0A.tab-btn%3Anot%28.active%29%3Ahover%7Bbackground%3Argba%28255%2C255%2C255%2C0.98%29%3Btransform%3AtranslateY%28-2px%29%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20SEARCH%20%26%20FILTERS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.filters-bar%7B%0A%20%20display%3Aflex%3Bgap%3A16px%3Balign-items%3Acenter%3B%0A%20%20flex-wrap%3Awrap%3Bmargin-bottom%3A26px%3B%0A%20%20animation%3AfadeIn%200.6s%20ease%200.2s%20both%3B%0A%7D%0A@keyframes%20fadeIn%7Bfrom%7Bopacity%3A0%3Btransform%3AtranslateY%2810px%29%7Dto%7Bopacity%3A1%3Btransform%3AtranslateY%280%29%7D%7D%0A.categories%7Bdisplay%3Aflex%3Bgap%3A10px%3Bflex-wrap%3Awrap%3Bflex%3A1%7D%0A.search-wrapper%7Bwidth%3A100%25%3Bmax-width%3A360px%3Bposition%3Arelative%7D%0A.search-icon%7B%0A%20%20position%3Aabsolute%3Bleft%3A18px%3Btop%3A50%25%3Btransform%3AtranslateY%28-50%25%29%3B%0A%20%20font-size%3A20px%3Bcolor%3Avar%28--text-muted%29%3Bpointer-events%3Anone%3B%0A%7D%0A%23search%7B%0A%20%20width%3A100%25%3Bpadding%3A15px%2020px%2015px%2050px%3Bborder-radius%3A14px%3B%0A%20%20background%3Avar%28--card-bg%29%3Bcolor%3Avar%28--text%29%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20font-weight%3A600%3Bfont-size%3A14px%3B%0A%7D%0A%23search%3Afocus%7B%0A%20%20outline%3Anone%3B%0A%20%20box-shadow%3A0%200%200%204px%20rgba%2899%2C102%2C241%2C0.3%29%3B%0A%20%20border-color%3Avar%28--primary%29%3B%0A%7D%0A%23search%3A%3Aplaceholder%7Bcolor%3Avar%28--text-muted%29%3Bfont-weight%3A500%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20PRODUCTS%20GRID%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.products%7B%0A%20%20display%3Agrid%3Bgap%3A28px%3B%0A%20%20grid-template-columns%3Arepeat%28auto-fill%2Cminmax%28260px%2C1fr%29%29%3B%0A%20%20animation%3AfadeIn%200.7s%20ease%200.3s%20both%3B%0A%7D%0A.card%7B%0A%20%20border-radius%3Avar%28--radius%29%3Bpadding%3A18px%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20cursor%3Apointer%3Bposition%3Arelative%3B%0A%20%20transform-style%3Apreserve-3d%3B%0A%7D%0A.card%3A%3Aafter%7B%0A%20%20content%3A%27%27%3Bposition%3Aabsolute%3Binset%3A0%3B%0A%20%20border-radius%3Avar%28--radius%29%3B%0A%20%20background%3Alinear-gradient%28135deg%2Crgba%2899%2C102%2C241%2C0.2%29%2Crgba%28236%2C72%2C153%2C0.2%29%29%3B%0A%20%20opacity%3A0%3Btransition%3Aopacity%200.4s%3Bpointer-events%3Anone%3B%0A%20%20z-index%3A0%3B%0A%7D%0A.card%3Ahover%3A%3Aafter%7Bopacity%3A1%7D%0A.card%3Ahover%7B%0A%20%20transform%3AtranslateY%28-12px%29%20scale%281.03%29%3B%0A%20%20box-shadow%3A0%2035px%2090px%20rgba%2815%2C23%2C42%2C0.25%29%3B%0A%7D%0A.card-content%7Bposition%3Arelative%3Bz-index%3A1%7D%0A.card%20img%7B%0A%20%20width%3A100%25%3Bheight%3A200px%3Bobject-fit%3Acover%3B%0A%20%20border-radius%3A14px%3Bmargin-bottom%3A16px%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20box-shadow%3A0%208px%2024px%20rgba%280%2C0%2C0%2C0.15%29%3B%0A%7D%0A.card%3Ahover%20img%7Btransform%3Ascale%281.08%29%7D%0A.card%20h3%7B%0A%20%20font-size%3A19px%3Bmargin-bottom%3A10px%3Bfont-weight%3A800%3B%0A%20%20line-height%3A1.3%3B%0A%7D%0A.card%20.desc%7B%0A%20%20font-size%3A14px%3Bcolor%3Avar%28--text-muted%29%3Bline-height%3A1.7%3B%0A%20%20font-weight%3A500%3B%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20DETAIL%20PANEL%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.product-detail%7B%0A%20%20display%3Anone%3Bpadding%3A32px%3Bborder-radius%3Avar%28--radius%29%3B%0A%20%20margin-top%3A32px%3Banimation%3AslideUp%200.6s%20ease%3B%0A%20%20position%3Arelative%3B%0A%7D%0A@keyframes%20slideUp%7Bfrom%7Bopacity%3A0%3Btransform%3AtranslateY%2840px%29%7Dto%7Bopacity%3A1%3Btransform%3AtranslateY%280%29%7D%7D%0A.detail-top%7Bdisplay%3Aflex%3Bgap%3A32px%3Balign-items%3Aflex-start%3Bflex-wrap%3Awrap%7D%0A.detail-top%20img%7B%0A%20%20width%3A100%25%3Bmax-width%3A440px%3Bheight%3A280px%3B%0A%20%20object-fit%3Acover%3Bborder-radius%3A18px%3Bflex-shrink%3A0%3B%0A%20%20box-shadow%3A0%2020px%2060px%20rgba%280%2C0%2C0%2C0.2%29%3B%0A%7D%0A.detail-info%7Bflex%3A1%3Bmin-width%3A320px%7D%0A.detail-info%20h2%7Bmargin%3A0%200%2014px%200%3Bfont-size%3A32px%3Bfont-weight%3A900%3Bline-height%3A1.2%7D%0A.detail-info%20p%7Bcolor%3Avar%28--text-secondary%29%3Bline-height%3A1.8%3Bmargin-bottom%3A24px%3Bfont-weight%3A500%7D%0A.detail-close%7B%0A%20%20position%3Aabsolute%3Btop%3A16px%3Bright%3A16px%3B%0A%20%20width%3A44px%3Bheight%3A44px%3Bborder-radius%3A14px%3B%0A%20%20background%3Avar%28--danger%29%3Bcolor%3A%23fff%3B%0A%20%20display%3Aflex%3Balign-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20font-size%3A22px%3Bfont-weight%3A800%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20box-shadow%3A0%208px%2024px%20rgba%28239%2C68%2C68%2C0.4%29%3B%0A%7D%0A.detail-close%3Ahover%7Bbackground%3A%23dc2626%3Btransform%3Ascale%281.15%29%20rotate%2890deg%29%7D%0A.sub-list%7B%0A%20%20margin-top%3A24px%3Bborder-radius%3A16px%3Boverflow%3Ahidden%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%7D%0A.sub-row%7B%0A%20%20display%3Aflex%3Bjustify-content%3Aspace-between%3Balign-items%3Acenter%3B%0A%20%20padding%3A18px%2020px%3Bbackground%3Avar%28--card-bg%29%3B%0A%20%20border-bottom%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.sub-row%3Ahover%7B%0A%20%20background%3Alinear-gradient%2890deg%2Crgba%2899%2C102%2C241%2C0.08%29%2Ctransparent%29%3B%0A%20%20transform%3AtranslateX%286px%29%3B%0A%7D%0A.sub-row%3Alast-child%7Bborder-bottom%3Anone%7D%0A.sub-info%7Bflex%3A1%7D%0A.sub-name%7Bfont-weight%3A800%3Bfont-size%3A17px%3Bmargin-bottom%3A6px%7D%0A.sub-price%7Bcolor%3Avar%28--text-muted%29%3Bfont-size%3A15px%3Bfont-weight%3A700%7D%0A.sub-actions%7Bdisplay%3Aflex%3Bgap%3A12px%3Balign-items%3Acenter%7D%0A.icon-add%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--success%29%2C%23059669%29%3B%0A%20%20color%3A%23fff%3Bborder-radius%3A12px%3Bpadding%3A11px%2020px%3B%0A%20%20font-weight%3A700%3Bfont-size%3A14px%3Btext-transform%3Auppercase%3B%0A%20%20box-shadow%3A0%2010px%2028px%20rgba%2816%2C185%2C129%2C0.5%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.icon-add%3Ahover%7B%0A%20%20transform%3AtranslateY%28-3px%29%3B%0A%20%20box-shadow%3A0%2014px%2038px%20rgba%2816%2C185%2C129%2C0.7%29%3B%0A%7D%0A.icon-remove%7B%0A%20%20width%3A40px%3Bheight%3A40px%3Bborder-radius%3A12px%3B%0A%20%20background%3Avar%28--danger%29%3Bcolor%3A%23fff%3B%0A%20%20font-size%3A20px%3Bfont-weight%3A800%3B%0A%20%20display%3Aflex%3Balign-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20box-shadow%3A0%208px%2024px%20rgba%28239%2C68%2C68%2C0.4%29%3B%0A%7D%0A.icon-remove%3Ahover%7Btransform%3Ascale%281.2%29%20rotate%2890deg%29%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CART%20SIDEBAR%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.cart-sidebar%7B%0A%20%20position%3Afixed%3Btop%3A0%3Bright%3A-100%25%3B%0A%20%20width%3A460px%3Bheight%3A100vh%3B%0A%20%20padding%3A28px%3Btransition%3Aright%200.5s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%20%20z-index%3A90%3Bdisplay%3Aflex%3Bflex-direction%3Acolumn%3B%0A%20%20box-shadow%3A-16px%200%2070px%20rgba%280%2C0%2C0%2C0.5%29%3B%0A%7D%0A.cart-sidebar.active%7Bright%3A0%7D%0A.cart-header%7B%0A%20%20display%3Aflex%3Bjustify-content%3Aspace-between%3Balign-items%3Acenter%3B%0A%20%20margin-bottom%3A24px%3Bpadding-bottom%3A24px%3B%0A%20%20border-bottom%3A3px%20solid%20var%28--card-border%29%3B%0A%7D%0A.cart-header%20h3%7Bfont-size%3A26px%3Bfont-weight%3A900%3Bletter-spacing%3A-0.5px%7D%0A.cart-list%7Bflex%3A1%3Boverflow-y%3Aauto%3Bpadding-right%3A10px%3Bmargin-bottom%3A24px%7D%0A.cart-list%3A%3A-webkit-scrollbar%7Bwidth%3A8px%7D%0A.cart-list%3A%3A-webkit-scrollbar-track%7Bbackground%3Atransparent%7D%0A.cart-list%3A%3A-webkit-scrollbar-thumb%7B%0A%20%20background%3Alinear-gradient%28180deg%2Cvar%28--primary%29%2Cvar%28--secondary%29%29%3B%0A%20%20border-radius%3A10px%3B%0A%7D%0A.cart-item%7B%0A%20%20display%3Aflex%3Bjustify-content%3Aspace-between%3Balign-items%3Acenter%3B%0A%20%20padding%3A18px%3Bborder-radius%3A16px%3Bmargin-bottom%3A16px%3B%0A%20%20background%3Avar%28--card-bg%29%3Bborder%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.cart-item%3Ahover%7Btransform%3AtranslateX%28-8px%29%3Bbox-shadow%3A0%2012px%2035px%20rgba%280%2C0%2C0%2C0.2%29%7D%0A.cart-item-info%7Bflex%3A1%3Bpadding-right%3A14px%7D%0A.cart-item-title%7Bfont-weight%3A800%3Bfont-size%3A16px%3Bmargin-bottom%3A8px%3Bline-height%3A1.3%7D%0A.cart-item-meta%7Bfont-size%3A14px%3Bcolor%3Avar%28--text-muted%29%3Bfont-weight%3A600%7D%0A.cart-actions%7Bdisplay%3Aflex%3Bgap%3A12px%3Balign-items%3Acenter%7D%0A.cart-actions%20button%7B%0A%20%20width%3A38px%3Bheight%3A38px%3Bborder-radius%3A12px%3B%0A%20%20background%3Avar%28--card-bg%29%3Bborder%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20color%3Avar%28--text%29%3Bfont-weight%3A800%3Bfont-size%3A20px%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.cart-actions%20button%3Ahover%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--primary-dark%29%29%3B%0A%20%20color%3A%23fff%3Btransform%3Ascale%281.2%29%3B%0A%7D%0A.cart-qty%7Bfont-weight%3A900%3Bmin-width%3A32px%3Btext-align%3Acenter%3Bfont-size%3A18px%7D%0A.cart-total%7B%0A%20%20border-top%3A3px%20solid%20var%28--card-border%29%3B%0A%20%20padding-top%3A24px%3B%0A%7D%0A.cart-total-row%7B%0A%20%20display%3Aflex%3Bjustify-content%3Aspace-between%3Balign-items%3Acenter%3B%0A%20%20margin-bottom%3A20px%3Bfont-size%3A22px%3Bfont-weight%3A900%3B%0A%7D%0A.cart-buttons%7Bdisplay%3Aflex%3Bgap%3A14px%7D%0A.cart-buttons%20.btn%7Bflex%3A1%7D%0A.cart-empty%7B%0A%20%20text-align%3Acenter%3Bpadding%3A70px%2024px%3B%0A%20%20color%3Avar%28--text-muted%29%3Bfont-size%3A16px%3Bline-height%3A2%3Bfont-weight%3A600%3B%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20MODALS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.overlay%7B%0A%20%20position%3Afixed%3Binset%3A0%3B%0A%20%20background%3Argba%280%2C0%2C0%2C0.75%29%3B%0A%20%20backdrop-filter%3Ablur%2812px%29%3B%0A%20%20display%3Anone%3Bz-index%3A80%3B%0A%20%20animation%3AfadeIn%200.3s%3B%0A%7D%0A.modal%7B%0A%20%20position%3Afixed%3Btop%3A50%25%3Bleft%3A50%25%3B%0A%20%20transform%3Atranslate%28-50%25%2C-50%25%29%3B%0A%20%20padding%3A36px%3Bborder-radius%3Avar%28--radius%29%3B%0A%20%20box-shadow%3Avar%28--shadow%29%3Bz-index%3A100%3B%0A%20%20width%3A90%25%3Bmax-width%3A560px%3Bdisplay%3Anone%3B%0A%20%20animation%3AscaleIn%200.5s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%7D%0A@keyframes%20scaleIn%7Bfrom%7Bopacity%3A0%3Btransform%3Atranslate%28-50%25%2C-50%25%29%20scale%280.9%29%7Dto%7Bopacity%3A1%3Btransform%3Atranslate%28-50%25%2C-50%25%29%20scale%281%29%7D%7D%0A.modal%20h3%7Bmargin-bottom%3A28px%3Bfont-size%3A26px%3Bfont-weight%3A900%7D%0A.modal%20label%7B%0A%20%20display%3Ablock%3Bfont-weight%3A700%3Bmargin-bottom%3A10px%3B%0A%20%20font-size%3A15px%3Bcolor%3Avar%28--text%29%3Btext-transform%3Auppercase%3Bletter-spacing%3A0.3px%3B%0A%7D%0Ainput%5Btype%3D%22text%22%5D%2Ctextarea%2Cinput%5Btype%3D%22file%22%5D%7B%0A%20%20width%3A100%25%3Bpadding%3A14px%2018px%3Bborder-radius%3A14px%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20background%3Avar%28--card-bg%29%3Bcolor%3Avar%28--text%29%3B%0A%20%20margin-bottom%3A18px%3Btransition%3Avar%28--transition%29%3B%0A%20%20backdrop-filter%3Avar%28--glass-blur%29%3B%0A%20%20font-weight%3A600%3B%0A%7D%0Ainput%5Btype%3D%22text%22%5D%3Afocus%2Ctextarea%3Afocus%7B%0A%20%20outline%3Anone%3Bborder-color%3Avar%28--primary%29%3B%0A%20%20box-shadow%3A0%200%200%204px%20rgba%2899%2C102%2C241%2C0.25%29%3B%0A%7D%0Atextarea%7Bmin-height%3A110px%3Bresize%3Avertical%3Bfont-family%3Ainherit%7D%0A.modal-footer%7Bdisplay%3Aflex%3Bjustify-content%3Aflex-end%3Bgap%3A16px%3Bmargin-top%3A28px%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20GUIDE%20POPUP%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.guide-popup%7B%0A%20%20position%3Afixed%3Btop%3A50%25%3Bleft%3A50%25%3B%0A%20%20transform%3Atranslate%28-50%25%2C-50%25%29%3B%0A%20%20padding%3A40px%3Bborder-radius%3Avar%28--radius%29%3B%0A%20%20box-shadow%3Avar%28--shadow%29%3Bz-index%3A100%3B%0A%20%20width%3A90%25%3Bmax-width%3A650px%3Bdisplay%3Anone%3B%0A%20%20animation%3AscaleIn%200.6s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%20%20max-height%3A85vh%3Boverflow-y%3Aauto%3B%0A%7D%0A.guide-popup.active%7Bdisplay%3Ablock%7D%0A.guide-popup%20h2%7B%0A%20%20margin-bottom%3A24px%3Bfont-size%3A32px%3Bfont-weight%3A900%3B%0A%20%20text-align%3Acenter%3B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--secondary%29%29%3B%0A%20%20-webkit-background-clip%3Atext%3B%0A%20%20-webkit-text-fill-color%3Atransparent%3B%0A%20%20background-clip%3Atext%3B%0A%7D%0A.guide-popup%20ol%7B%0A%20%20margin-left%3A28px%3Bline-height%3A2.2%3Bcolor%3Avar%28--text-secondary%29%3B%0A%20%20font-weight%3A500%3Bfont-size%3A15px%3Bmargin-bottom%3A28px%3B%0A%7D%0A.guide-popup%20li%7Bmargin-bottom%3A14px%7D%0A.guide-popup%20strong%7Bcolor%3Avar%28--text%29%3Bfont-weight%3A800%7D%0A.guide-close-btn%7B%0A%20%20width%3A100%25%3Bpadding%3A16px%3Bborder-radius%3A14px%3B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--primary-dark%29%29%3B%0A%20%20color%3A%23fff%3Bfont-weight%3A800%3Bfont-size%3A16px%3B%0A%20%20box-shadow%3A0%2014px%2040px%20rgba%2899%2C102%2C241%2C0.5%29%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%20%20text-transform%3Auppercase%3Bletter-spacing%3A0.5px%3B%0A%7D%0A.guide-close-btn%3Ahover%7B%0A%20%20box-shadow%3A0%2018px%2050px%20rgba%2899%2C102%2C241%2C0.7%29%3B%0A%20%20transform%3AtranslateY%28-3px%29%3B%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20IMAGE%20MODAL%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.image-modal%7B%0A%20%20position%3Afixed%3Binset%3A0%3B%0A%20%20background%3Argba%280%2C0%2C0%2C0.9%29%3B%0A%20%20backdrop-filter%3Ablur%2816px%29%3B%0A%20%20display%3Anone%3Bz-index%3A120%3B%0A%20%20align-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20animation%3AfadeIn%200.4s%3B%0A%20%20cursor%3Azoom-out%3B%0A%7D%0A.image-modal.active%7Bdisplay%3Aflex%7D%0A.image-modal-content%7B%0A%20%20position%3Arelative%3Bmax-width%3A92%25%3Bmax-height%3A92%25%3B%0A%20%20animation%3AzoomIn%200.5s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%20%20cursor%3Adefault%3B%0A%7D%0A@keyframes%20zoomIn%7Bfrom%7Bopacity%3A0%3Btransform%3Ascale%280.75%29%7Dto%7Bopacity%3A1%3Btransform%3Ascale%281%29%7D%7D%0A.image-modal%20img%7B%0A%20%20max-width%3A100%25%3Bmax-height%3A90vh%3B%0A%20%20border-radius%3A20px%3B%0A%20%20box-shadow%3A0%2025px%20100px%20rgba%280%2C0%2C0%2C0.8%29%3B%0A%7D%0A.image-modal-close%7B%0A%20%20position%3Aabsolute%3Btop%3A-60px%3Bright%3A0%3B%0A%20%20width%3A48px%3Bheight%3A48px%3Bborder-radius%3A14px%3B%0A%20%20background%3Avar%28--danger%29%3Bcolor%3A%23fff%3B%0A%20%20display%3Aflex%3Balign-items%3Acenter%3Bjustify-content%3Acenter%3B%0A%20%20font-size%3A26px%3Bfont-weight%3A800%3B%0A%20%20transition%3Avar%28--transition%29%3Bcursor%3Apointer%3B%0A%20%20box-shadow%3A0%2010px%2030px%20rgba%28239%2C68%2C68%2C0.6%29%3B%0A%7D%0A.image-modal-close%3Ahover%7Bbackground%3A%23dc2626%3Btransform%3Ascale%281.2%29%20rotate%2890deg%29%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20PAYMENTS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.payment-section%7B%0A%20%20padding%3A32px%3Bborder-radius%3Avar%28--radius%29%3B%0A%20%20margin-bottom%3A32px%3B%0A%7D%0A.payment-section%20h3%7Bmargin-bottom%3A16px%3Bfont-size%3A24px%3Bfont-weight%3A900%7D%0A.payment-section%20p%7Bcolor%3Avar%28--text-secondary%29%3Bline-height%3A1.8%3Bmargin-bottom%3A22px%3Bfont-weight%3A500%7D%0A.qris-preview%7B%0A%20%20text-align%3Acenter%3Bpadding%3A36px%3B%0A%20%20background%3Avar%28--card-bg%29%3Bborder-radius%3A18px%3B%0A%20%20border%3A3px%20dashed%20var%28--card-border%29%3B%0A%20%20margin%3A22px%200%3Bcursor%3Apointer%3B%0A%20%20transition%3Avar%28--transition%29%3B%0A%7D%0A.qris-preview%3Ahover%7B%0A%20%20border-color%3Avar%28--primary%29%3B%0A%20%20transform%3Ascale%281.04%29%3B%0A%20%20box-shadow%3A0%2016px%2050px%20rgba%2899%2C102%2C241%2C0.3%29%3B%0A%7D%0A.qris-preview-icon%7B%0A%20%20font-size%3A72px%3Bmargin-bottom%3A16px%3B%0A%20%20animation%3Afloat%203.5s%20ease-in-out%20infinite%3B%0A%7D%0A@keyframes%20float%7B0%25%2C100%25%7Btransform%3AtranslateY%280%29%7D50%25%7Btransform%3AtranslateY%28-12px%29%7D%7D%0A.qris-preview-text%7Bfont-weight%3A800%3Bfont-size%3A18px%3Bcolor%3Avar%28--primary%29%3Btext-transform%3Auppercase%3Bletter-spacing%3A0.5px%7D%0A.copy-btn%7B%0A%20%20width%3A100%25%3Bpadding%3A18px%2022px%3Bborder-radius%3A14px%3B%0A%20%20background%3Avar%28--card-bg%29%3Bcolor%3Avar%28--text%29%3B%0A%20%20text-align%3Aleft%3Bfont-weight%3A700%3Bmargin-bottom%3A14px%3B%0A%20%20border%3A2px%20solid%20var%28--card-border%29%3B%0A%20%20transition%3Avar%28--transition%29%3Bposition%3Arelative%3Boverflow%3Ahidden%3B%0A%7D%0A.copy-btn%3A%3Aafter%7B%0A%20%20content%3A%27%uD83D%uDCCB%27%3Bposition%3Aabsolute%3Bright%3A22px%3Btop%3A50%25%3B%0A%20%20transform%3AtranslateY%28-50%25%29%3B%0A%20%20font-size%3A24px%3Btransition%3Avar%28--transition%29%3B%0A%7D%0A.copy-btn%3Ahover%7B%0A%20%20background%3Alinear-gradient%28135deg%2Cvar%28--primary%29%2Cvar%28--primary-dark%29%29%3B%0A%20%20color%3A%23fff%3Btransform%3AtranslateX%288px%29%3B%0A%7D%0A.copy-btn%3Ahover%3A%3Aafter%7Btransform%3AtranslateY%28-50%25%29%20scale%281.3%29%20rotate%2815deg%29%7D%0A.copy-btn%20strong%7Bdisplay%3Ablock%3Bmargin-bottom%3A6px%3Bfont-size%3A17px%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20TOAST%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A.toast%7B%0A%20%20position%3Afixed%3Bbottom%3A32px%3Bright%3A32px%3B%0A%20%20background%3Alinear-gradient%28135deg%2C%231e293b%2C%230f172a%29%3B%0A%20%20color%3A%23fff%3Bpadding%3A18px%2028px%3Bborder-radius%3A16px%3B%0A%20%20font-weight%3A700%3Bfont-size%3A15px%3B%0A%20%20box-shadow%3A0%2016px%2060px%20rgba%280%2C0%2C0%2C0.5%29%3B%0A%20%20opacity%3A0%3Btransform%3AtranslateY%2840px%29%3B%0A%20%20transition%3Aall%200.5s%20cubic-bezier%280.4%2C0%2C0.2%2C1%29%3B%0A%20%20z-index%3A130%3Bmax-width%3A380px%3B%0A%20%20border%3A2px%20solid%20rgba%28255%2C255%2C255%2C0.1%29%3B%0A%7D%0A.toast.show%7Bopacity%3A1%3Btransform%3AtranslateY%280%29%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20RESPONSIVE%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0A@media%28max-width%3A768px%29%7B%0A%20%20.detail-top%7Bflex-direction%3Acolumn%7D%0A%20%20.detail-top%20img%7Bmax-width%3A100%25%3Bheight%3A260px%7D%0A%20%20.cart-sidebar%7Bwidth%3A94%25%3Bmax-width%3A420px%7D%0A%20%20.products%7Bgrid-template-columns%3Arepeat%28auto-fill%2Cminmax%28170px%2C1fr%29%29%3Bgap%3A18px%7D%0A%20%20.filters-bar%7Bflex-direction%3Acolumn%3Balign-items%3Astretch%7D%0A%20%20.search-wrapper%7Bmax-width%3A100%25%7D%0A%20%20.header-inner%7Bflex-wrap%3Awrap%7D%0A%20%20.brand-text%20.title%7Bfont-size%3A20px%7D%0A%20%20.brand-text%20.subtitle%7Bfont-size%3A12px%7D%0A%20%20.detail-close%7Btop%3A12px%3Bright%3A12px%3Bwidth%3A40px%3Bheight%3A40px%7D%0A%20%20.image-modal-close%7Btop%3A-50px%3Bwidth%3A44px%3Bheight%3A44px%7D%0A%20%20.card%20img%7Bheight%3A170px%7D%0A%20%20.container%7Bpadding%3A20px%2014px%7D%0A%20%20.logo%7Bwidth%3A48px%3Bheight%3A48px%7D%0A%20%20.guide-popup%7Bpadding%3A28px%3Bmax-width%3A95%25%7D%0A%20%20.guide-popup%20h2%7Bfont-size%3A26px%7D%0A%20%20.guide-popup%20ol%7Bfont-size%3A14px%3Bline-height%3A2%7D%0A%20%20.btn%7Bpadding%3A10px%2018px%3Bfont-size%3A13px%7D%0A%7D%0A%0A/*%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20PREVENT%20INSPECT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20*/%0Abody%7B%0A%20%20-webkit-user-select%3Anone%3B%0A%20%20-moz-user-select%3Anone%3B%0A%20%20-ms-user-select%3Anone%3B%0A%20%20user-select%3Anone%3B%0A%7D%0A%3C/style%3E%0A%3C/head%3E%0A%3Cbody%3E%0A%0A%3Cheader%20class%3D%22header%20glass%22%3E%0A%20%20%3Cdiv%20class%3D%22header-inner%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22brand%22%20onclick%3D%22location.reload%28%29%22%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22logo%22%3E%0A%20%20%20%20%20%20%20%20%3Cimg%20src%3D%22https%3A//cdn.discordapp.com/attachments/1380516637568012319/1424267837534507161/57a3f288-7ae6-4a66-816a-0b885f1a0fbe.png%3Fex%3D68e3544a%26is%3D68e202ca%26hm%3D7311064aca41fadecdc83b4dbff8b293068fc3be7c6d06454508d476631d7495%26%22%20alt%3D%22IkkonStore%22%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22brand-text%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22title%22%3EIkkonStore%3C/div%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22subtitle%22%3EStore%20Amanah%3C/div%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%20%20%3Cdiv%20class%3D%22header-actions%22%3E%0A%20%20%20%20%20%20%3Cbutton%20id%3D%22guide-btn%22%20class%3D%22btn%20info%22%3E%uD83D%uDCD6%20Panduan%3C/button%3E%0A%20%20%20%20%20%20%3Cbutton%20id%3D%22theme-btn%22%20class%3D%22btn%20ghost%22%3E%uD83C%uDF19%3C/button%3E%0A%20%20%20%20%20%20%3Cbutton%20id%3D%22cart-btn%22%20class%3D%22btn%20primary%22%3E%0A%20%20%20%20%20%20%20%20%uD83D%uDED2%20%3Cspan%20id%3D%22cart-count%22%20class%3D%22badge%22%3E0%3C/span%3E%0A%20%20%20%20%20%20%3C/button%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%3C/div%3E%0A%3C/header%3E%0A%0A%3Cdiv%20class%3D%22container%22%3E%0A%20%20%3Cdiv%20class%3D%22tabs%22%3E%0A%20%20%20%20%3Cbutton%20class%3D%22tab-btn%20glass%20active%22%20data-tab%3D%22products%22%3E%uD83D%uDECD%uFE0F%20Produk%3C/button%3E%0A%20%20%20%20%3Cbutton%20class%3D%22tab-btn%20glass%22%20data-tab%3D%22payments%22%3E%uD83D%uDCB3%20Pembayaran%3C/button%3E%0A%20%20%3C/div%3E%0A%0A%20%20%3C%21--%20PRODUCTS%20TAB%20--%3E%0A%20%20%3Cdiv%20id%3D%22tab-products%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22filters-bar%22%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22categories%22%20id%3D%22category-list%22%3E%3C/div%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22search-wrapper%22%3E%0A%20%20%20%20%20%20%20%20%3Cspan%20class%3D%22search-icon%22%3E%uD83D%uDD0D%3C/span%3E%0A%20%20%20%20%20%20%20%20%3Cinput%20type%3D%22text%22%20id%3D%22search%22%20placeholder%3D%22Cari%20produk%20favorit...%22%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%20%20%3Cdiv%20class%3D%22products%22%20id%3D%22product-grid%22%3E%3C/div%3E%0A%20%20%20%20%3Cdiv%20class%3D%22product-detail%20glass%22%20id%3D%22detail-panel%22%3E%3C/div%3E%0A%20%20%3C/div%3E%0A%0A%20%20%3C%21--%20PAYMENTS%20TAB%20--%3E%0A%20%20%3Cdiv%20id%3D%22tab-payments%22%20style%3D%22display%3Anone%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22payment-section%20glass%22%3E%0A%20%20%20%20%20%20%3Ch3%3E%uD83D%uDCAB%20QRIS%20Payment%3C/h3%3E%0A%20%20%20%20%20%20%3Cp%3EScan%20kode%20QRIS%20dengan%20aplikasi%20mobile%20banking%20atau%20e-wallet%20favoritmu%3C/p%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22qris-preview%22%20id%3D%22qris-preview%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22qris-preview-icon%22%3E%uD83D%uDCF1%3C/div%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22qris-preview-text%22%3EKlik%20untuk%20lihat%20QR%20Code%3C/div%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%3Cp%20style%3D%22font-size%3A13px%3Bcolor%3Avar%28--text-muted%29%3Btext-align%3Acenter%3Bfont-weight%3A600%22%3E%0A%20%20%20%20%20%20%20%20%uD83D%uDCA1%20Tips%3A%20Upload%20bukti%20pembayaran%20saat%20checkout%0A%20%20%20%20%20%20%3C/p%3E%0A%20%20%20%20%3C/div%3E%0A%0A%20%20%20%20%3Cdiv%20class%3D%22payment-section%20glass%22%3E%0A%20%20%20%20%20%20%3Ch3%3E%uD83D%uDCB0%20E-Wallet%20Transfer%3C/h3%3E%0A%20%20%20%20%20%20%3Cp%3ETransfer%20ke%20salah%20satu%20nomor%20e-wallet%20berikut.%20Klik%20untuk%20menyalin%20nomor%20secara%20otomatis%20ke%20clipboard.%3C/p%3E%0A%20%20%20%20%20%20%3Cbutton%20class%3D%22copy-btn%22%20data-name%3D%22DANA%22%20data-number%3D%22081237430671%22%3E%0A%20%20%20%20%20%20%20%20%3Cstrong%3E%uD83D%uDCB3%20DANA%3C/strong%3E%0A%20%20%20%20%20%20%20%20081237430671%0A%20%20%20%20%20%20%3C/button%3E%0A%20%20%20%20%20%20%3Cbutton%20class%3D%22copy-btn%22%20data-name%3D%22GoPay%22%20data-number%3D%22085198425060%22%3E%0A%20%20%20%20%20%20%20%20%3Cstrong%3E%uD83D%uDFE2%20GoPay%3C/strong%3E%0A%20%20%20%20%20%20%20%20085198425060%0A%20%20%20%20%20%20%3C/button%3E%0A%20%20%20%20%20%20%3Cbutton%20class%3D%22copy-btn%22%20data-name%3D%22ShopeePay%22%20data-number%3D%22085198425060%22%3E%0A%20%20%20%20%20%20%20%20%3Cstrong%3E%uD83E%uDDE1%20ShopeePay%3C/strong%3E%0A%20%20%20%20%20%20%20%20085198425060%0A%20%20%20%20%20%20%3C/button%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%3C/div%3E%0A%3C/div%3E%0A%0A%3C%21--%20GUIDE%20POPUP%20--%3E%0A%3Cdiv%20class%3D%22overlay%22%20id%3D%22overlay%22%3E%3C/div%3E%0A%3Cdiv%20class%3D%22guide-popup%20glass%22%20id%3D%22guide-popup%22%3E%0A%20%20%3Ch2%3E%uD83D%uDCD6%20Panduan%20Pembelian%3C/h2%3E%0A%20%20%3Col%3E%0A%20%20%20%20%3Cli%3EPilih%20produk%20yang%20kamu%20inginkan%20di%20tab%20%3Cstrong%3EProduk%3C/strong%3E%3C/li%3E%0A%20%20%20%20%3Cli%3EKlik%20produk%20untuk%20melihat%20detail%20lengkap%20dan%20varian%3C/li%3E%0A%20%20%20%20%3Cli%3EPilih%20varian%20dan%20klik%20tombol%20%3Cstrong%3E%22+%20Tambah%22%3C/strong%3E%20untuk%20memasukkan%20ke%20keranjang%3C/li%3E%0A%20%20%20%20%3Cli%3EClick%20Tab%20%3Cstrong%3EPayment%3C/strong%3E%20lanjutkan%20seperti%20membayar%20pada%20biasanya%3C/li%3E%0A%20%20%20%20%3Cli%3EBuka%20keranjang%20dengan%20klik%20ikon%20%uD83D%uDED2%20di%20pojok%20kanan%20atas%3C/li%3E%0A%20%20%20%20%3Cli%3EMasukan%20jumlah%20pesanan%20%28jika%20tidak%20ada%20pilihan%20yang%20dimau%29%3C/li%3E%0A%20%20%20%20%3Cli%3EKlik%20%3Cstrong%3ECheckout%3C/strong%3E%20dan%20isi%20seluruh%20form%20%28ketik%20kode%20di%20Data%20Joki%29%3C/li%3E%0A%20%20%20%20%3Cli%3EUpload%20bukti%20pembayaran%20%28%3Cstrong%3EWajib%3C/strong%3E%20/%20Hangus%29%3C/li%3E%0A%20%20%20%20%3Cli%3EKlik%20%3Cstrong%3EKirim%3C/strong%3E%20dan%20pesananmu%20akan%20langsung%20dikirim%20ke%20admin%3C/li%3E%0A%20%20%20%20%3Cli%3ETunggu%20hingga%20di%20chat%20admin%20%u2705%3C/li%3E%0A%20%20%3C/ol%3E%0A%20%20%3Cbutton%20class%3D%22guide-close-btn%22%20onclick%3D%22closeGuidePopup%28%29%22%3EMengerti%20%uD83D%uDC4D%3C/button%3E%0A%3C/div%3E%0A%0A%3C%21--%20CART%20SIDEBAR%20--%3E%0A%3Cdiv%20class%3D%22cart-sidebar%20glass%22%20id%3D%22cart-sidebar%22%3E%0A%20%20%3Cdiv%20class%3D%22cart-header%22%3E%0A%20%20%20%20%3Ch3%3E%uD83D%uDED2%20Keranjang%20Saya%3C/h3%3E%0A%20%20%20%20%3Cbutton%20id%3D%22close-cart%22%20class%3D%22btn%20ghost%22%20style%3D%22padding%3A10px%2016px%22%3E%u2716%3C/button%3E%0A%20%20%3C/div%3E%0A%20%20%3Cdiv%20class%3D%22cart-list%22%20id%3D%22cart-list%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22cart-empty%22%3E%0A%20%20%20%20%20%20Keranjang%20masih%20kosong%20%uD83D%uDECD%uFE0F%3Cbr%3E%3Cbr%3E%0A%20%20%20%20%20%20Yuk%20mulai%20belanja%20sekarang%21%0A%20%20%20%20%3C/div%3E%0A%20%20%3C/div%3E%0A%20%20%3Cdiv%20class%3D%22cart-total%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22cart-total-row%22%3E%0A%20%20%20%20%20%20%3Cspan%3ETotal%20Belanja%3C/span%3E%0A%20%20%20%20%20%20%3Cspan%20id%3D%22cart-total%22%3ERp0%3C/span%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%20%20%3Cdiv%20class%3D%22cart-buttons%22%3E%0A%20%20%20%20%20%20%3Cbutton%20id%3D%22clear-cart%22%20class%3D%22btn%20danger%22%3E%uD83D%uDDD1%uFE0F%3C/button%3E%0A%20%20%20%20%20%20%3Cbutton%20id%3D%22checkout-btn%22%20class%3D%22btn%20primary%22%3ECheckout%3C/button%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%3C/div%3E%0A%3C/div%3E%0A%0A%3C%21--%20CHECKOUT%20MODAL%20--%3E%0A%3Cdiv%20class%3D%22modal%20glass%22%20id%3D%22checkout-modal%22%3E%0A%20%20%3Ch3%3E%uD83D%uDCE6%20Checkout%20Pesanan%3C/h3%3E%0A%20%20%0A%20%20%3Clabel%3ENama%20Lengkap%20*%3C/label%3E%0A%20%20%3Cinput%20type%3D%22text%22%20id%3D%22buyer-name%22%20placeholder%3D%22Masukkan%20nama%20lengkap%22%20required%3E%0A%20%20%0A%20%20%3Clabel%3EKontak%20%28WhatsApp%2CTelegram%2CTiktok%29%20*%3C/label%3E%0A%20%20%3Cinput%20type%3D%22text%22%20id%3D%22buyer-contact%22%20placeholder%3D%2208xxx/@abc/tele%22%20required%3E%0A%20%20%0A%20%3Clabel%3EData%20Akun%20*%3C/label%3E%0A%20%20%3Cinput%20type%3D%22text%22%20id%3D%22buyer-note%22%20placeholder%3D%22%28Usn%29%20%7C%20%28Pw%29%20dan%20%28kode%20Jika%20ada%29%22%20required%3E%0A%20%20%0A%20%20%3Clabel%3EBukti%20Pembayaran%3C/label%3E%0A%20%20%3Cinput%20type%3D%22file%22%20id%3D%22buyer-proof%22%20accept%3D%22image/*%22%3E%0A%20%20%3Cp%20style%3D%22font-size%3A12px%3Bcolor%3Avar%28--text-muted%29%3Bmargin-top%3A-12px%3Bmargin-bottom%3A20px%3Bfont-weight%3A600%22%3E%0A%20%20%20%20%uD83D%uDCF8%20Upload%20screenshot%20bukti%20transfer%0A%20%20%3C/p%3E%0A%20%20%0A%20%20%3Cdiv%20class%3D%22modal-footer%22%3E%0A%20%20%20%20%3Cbutton%20id%3D%22checkout-cancel%22%20class%3D%22btn%20ghost%22%3EBatal%3C/button%3E%0A%20%20%20%20%3Cbutton%20id%3D%22checkout-send%22%20class%3D%22btn%20primary%22%3EKirim%3C/button%3E%0A%20%20%3C/div%3E%0A%3C/div%3E%0A%0A%3C%21--%20IMAGE%20MODAL%20--%3E%0A%3Cdiv%20class%3D%22image-modal%22%20id%3D%22image-modal%22%3E%0A%20%20%3Cdiv%20class%3D%22image-modal-content%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22image-modal-close%22%20id%3D%22image-modal-close%22%3E%u2716%3C/div%3E%0A%20%20%20%20%3Cimg%20src%3D%22%22%20alt%3D%22QRIS%20Code%22%20id%3D%22modal-image%22%3E%0A%20%20%3C/div%3E%0A%3C/div%3E%0A%0A%3Cdiv%20id%3D%22toast%22%20class%3D%22toast%22%3E%3C/div%3E%0A%0A%3Cscript%3E%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20DISABLE%20INSPECT%20ELEMENT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Adocument.addEventListener%28%27contextmenu%27%2Ce%3D%3Ee.preventDefault%28%29%29%3B%0Adocument.addEventListener%28%27keydown%27%2Ce%3D%3E%7B%0A%20%20if%28e.ctrlKey%26%26%28e.shiftKey%26%26%28e.key%3D%3D%3D%27I%27%7C%7Ce.key%3D%3D%3D%27J%27%7C%7Ce.key%3D%3D%3D%27C%27%29%7C%7Ce.key%3D%3D%3D%27U%27%29%7C%7Ce.key%3D%3D%3D%27F12%27%29%7B%0A%20%20%20%20e.preventDefault%28%29%3B%0A%20%20%7D%0A%7D%29%3B%0A%28function%28%29%7Bconst%20d%3D%28%29%3D%3E%7Bconst%20e%3Dnew%20Error%3Bif%28e.stack%26%26e.stack.includes%28%27devtools%27%29%29window.location.href%3D%27about%3Ablank%27%7D%3BsetInterval%28d%2C1000%29%7D%29%28%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CONFIG%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Aconst%20TELEGRAM_BOT_TOKEN%3D%278482227950%3AAAHOAJoCXHpY4_1Ju8E7mVjt7WKjvrihmwE%27%3B%0Aconst%20TELEGRAM_CHAT_ID%3D%277606757435%27%3B%0Aconst%20QRIS_IMAGE_URL%3D%27https%3A//cdn.discordapp.com/attachments/1380516637568012319/1424263582731862016/c3759072-89c0-4ca1-85de-4a24ac0f2d0e.png%3Fex%3D68e35053%26is%3D68e1fed3%26hm%3D0309e3b97d1710a91a12b06c5e1ad3935d3b8e3e4254e1b0a366b56a746df7a1%26%27%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20DATA%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Aconst%20categories%3D%5B%0A%20%20%7Bid%3A%27all%27%2Cname%3A%27Semua%27%7D%2C%0A%20%20%7Bid%3A%27fashion%27%2Cname%3A%2799%20Days%20In%20The%20Forest%27%7D%0A%5D%3B%0A%0Aconst%20products%3D%5B%0A%20%20%7B%0A%20%20%20%20id%3A%27p1%27%2Ccat%3A%27fashion%27%2C%0A%20%20%20%20title%3A%27Days%20%28dimainin%29%27%2C%0A%20%20%20%20desc%3A%27Joki%20Days%20Versi%20Dimainkan%27%2C%0A%20%20%20%20img%3A%27https%3A//cdn.discordapp.com/attachments/1380516637568012319/1424272344670801981/Z.png%3Fex%3D68e3587c%26is%3D68e206fc%26hm%3D2c8626b6532728f930d9f1779b1c17b0bb7e32da19b407e42341373b42837ef7%26%27%2C%0A%20%20%20%20subs%3A%5B%0A%20%20%20%20%20%20%7Bid%3A%27p1s1%27%2Ctitle%3A%27100%20Days%27%2Cprice%3A9000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p1s2%27%2Ctitle%3A%27200%20Days%27%2Cprice%3A17000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p1s3%27%2Ctitle%3A%27300%20Days%27%2Cprice%3A23000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p1s4%27%2Ctitle%3A%27400%20Days%27%2Cprice%3A28000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p1s%27%2Ctitle%3A%27500%20Days%27%2Cprice%3A34000%7D%0A%20%20%20%20%5D%0A%20%20%7D%2C%0A%20%20%7B%0A%20%20%20%20id%3A%27p2%27%2Ccat%3A%27fashion%27%2C%0A%20%20%20%20title%3A%27Days%20%28Mabar%29%27%2C%0A%20%20%20%20desc%3A%27Joki%20Days%20Versi%20Dimabar%27%2C%0A%20%20%20%20img%3A%27https%3A//cdn.discordapp.com/attachments/1380516637568012319/1424272344670801981/Z.png%3Fex%3D68e3587c%26is%3D68e206fc%26hm%3D2c8626b6532728f930d9f1779b1c17b0bb7e32da19b407e42341373b42837ef7%26%27%2C%0A%20%20%20%20subs%3A%5B%0A%20%20%20%20%20%20%7Bid%3A%27p2s1%27%2Ctitle%3A%27100%20Days%27%2Cprice%3A10000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p2s2%27%2Ctitle%3A%27200%20Days%27%2Cprice%3A18000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p2s3%27%2Ctitle%3A%27300%20Days%27%2Cprice%3A24000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p2s4%27%2Ctitle%3A%27400%20Days%27%2Cprice%3A29000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p2s5%27%2Ctitle%3A%27500%20Days%27%2Cprice%3A35000%7D%0A%20%20%20%20%5D%0A%20%20%7D%2C%0A%20%20%7B%0A%20%20%20%20id%3A%27p3%27%2Ccat%3A%27fashion%27%2C%0A%20%20%20%20title%3A%27Diamond%20%28Dimainkan%29%27%2C%0A%20%20%20%20desc%3A%27Joki%20Diamond%20Dimainkan%20Only%27%2C%0A%20%20%20%20img%3A%27https%3A//cdn.discordapp.com/attachments/1380516637568012319/1424272344670801981/Z.png%3Fex%3D68e3587c%26is%3D68e206fc%26hm%3D2c8626b6532728f930d9f1779b1c17b0bb7e32da19b407e42341373b42837ef7%26%27%2C%0A%20%20%20%20subs%3A%5B%0A%20%20%20%20%20%20%7Bid%3A%27p3s1%27%2Ctitle%3A%27100%20DM%27%2Cprice%3A7000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p3s2%27%2Ctitle%3A%27200%20Days%27%2Cprice%3A12000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p3s3%27%2Ctitle%3A%27300%20Days%27%2Cprice%3A17000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p3s4%27%2Ctitle%3A%27400%20Days%27%2Cprice%3A22000%7D%2C%0A%20%20%20%20%20%20%7Bid%3A%27p3s5%27%2Ctitle%3A%27500%20Days%27%2Cprice%3A27000%7D%0A%20%20%20%20%5D%0A%20%20%7D%0A%5D%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20STATE%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Alet%20cart%3D%7B%7D%3B%0Alet%20activeCategory%3D%27all%27%3B%0Alet%20addedItems%3Dnew%20Set%28%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20HELPER%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Aconst%20%24%3Did%3D%3Edocument.getElementById%28id%29%3B%0Aconst%20fmt%3Dn%3D%3E%27Rp%27+n.toString%28%29.replace%28/%5CB%28%3F%3D%28%5Cd%7B3%7D%29+%28%3F%21%5Cd%29%29/g%2C%27.%27%29%3B%0Afunction%20showToast%28msg%29%7B%0A%20%20const%20t%3D%24%28%27toast%27%29%3B%0A%20%20t.textContent%3Dmsg%3B%0A%20%20t.classList.add%28%27show%27%29%3B%0A%20%20setTimeout%28%28%29%3D%3Et.classList.remove%28%27show%27%29%2C3000%29%3B%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20GUIDE%20POPUP%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Afunction%20openGuidePopup%28%29%7B%0A%20%20%24%28%27overlay%27%29.style.display%3D%27block%27%3B%0A%20%20%24%28%27guide-popup%27%29.classList.add%28%27active%27%29%3B%0A%7D%0A%0Afunction%20closeGuidePopup%28%29%7B%0A%20%20%24%28%27overlay%27%29.style.display%3D%27none%27%3B%0A%20%20%24%28%27guide-popup%27%29.classList.remove%28%27active%27%29%3B%0A%7D%0A%0Afunction%20showWelcomeGuide%28%29%7B%0A%20%20const%20hasVisited%3DlocalStorage.getItem%28%27hasVisitedIkkonStore%27%29%3B%0A%20%20if%28%21hasVisited%29%7B%0A%20%20%20%20setTimeout%28%28%29%3D%3E%7B%0A%20%20%20%20%20%20openGuidePopup%28%29%3B%0A%20%20%20%20%20%20localStorage.setItem%28%27hasVisitedIkkonStore%27%2C%27true%27%29%3B%0A%20%20%20%20%7D%2C800%29%3B%0A%20%20%7D%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20RENDER%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Afunction%20renderCategories%28%29%7B%0A%20%20%24%28%27category-list%27%29.innerHTML%3Dcategories.map%28c%3D%3E%0A%20%20%20%20%60%3Cbutton%20class%3D%22tab-btn%20%24%7Bc.id%3D%3D%3DactiveCategory%3F%27active%27%3A%27%27%7D%22%20onclick%3D%22filterCategory%28%27%24%7Bc.id%7D%27%29%22%3E%24%7Bc.name%7D%3C/button%3E%60%0A%20%20%29.join%28%27%27%29%3B%0A%7D%0A%0Afunction%20renderProducts%28%29%7B%0A%20%20const%20term%3D%24%28%27search%27%29.value.toLowerCase%28%29%3B%0A%20%20const%20grid%3D%24%28%27product-grid%27%29%3B%0A%20%20%0A%20%20let%20filtered%3B%0A%20%20if%28term%29%7B%0A%20%20%20%20filtered%3Dproducts.filter%28p%3D%3E%0A%20%20%20%20%20%20p.title.toLowerCase%28%29.includes%28term%29%7C%7C%0A%20%20%20%20%20%20p.desc.toLowerCase%28%29.includes%28term%29%7C%7C%0A%20%20%20%20%20%20p.cat.toLowerCase%28%29.includes%28term%29%0A%20%20%20%20%29%3B%0A%20%20%7Delse%7B%0A%20%20%20%20filtered%3Dproducts.filter%28p%3D%3EactiveCategory%3D%3D%3D%27all%27%7C%7Cp.cat%3D%3D%3DactiveCategory%29%3B%0A%20%20%7D%0A%20%20%0A%20%20if%28%21filtered.length%29%7B%0A%20%20%20%20grid.innerHTML%3D%27%3Cdiv%20class%3D%22glass%22%20style%3D%22text-align%3Acenter%3Bgrid-column%3A1/-1%3Bpadding%3A60px%3Bborder-radius%3A18px%3Bfont-weight%3A700%3Bfont-size%3A16px%22%3E%uD83D%uDD0D%20Produk%20tidak%20ditemukan%3C/div%3E%27%3B%0A%20%20%20%20return%3B%0A%20%20%7D%0A%20%20%0A%20%20grid.innerHTML%3Dfiltered.map%28p%3D%3E%0A%20%20%20%20%60%3Cdiv%20class%3D%22card%20glass%22%20onclick%3D%22openDetail%28%27%24%7Bp.id%7D%27%29%22%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22card-content%22%3E%0A%20%20%20%20%20%20%20%20%3Cimg%20src%3D%22%24%7Bp.img%7D%22%20alt%3D%22%24%7Bp.title%7D%22%20loading%3D%22lazy%22%3E%0A%20%20%20%20%20%20%20%20%3Ch3%3E%24%7Bp.title%7D%3C/h3%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22desc%22%3E%24%7Bp.desc%7D%3C/div%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%3C/div%3E%60%0A%20%20%29.join%28%27%27%29%3B%0A%7D%0A%0Afunction%20renderCart%28%29%7B%0A%20%20const%20list%3D%24%28%27cart-list%27%29%3B%0A%20%20let%20total%3D0%3B%0A%20%20const%20entries%3DObject.entries%28cart%29%3B%0A%20%20%0A%20%20if%28%21entries.length%29%7B%0A%20%20%20%20list.innerHTML%3D%27%3Cdiv%20class%3D%22cart-empty%22%3EKeranjang%20masih%20kosong%20%uD83D%uDECD%uFE0F%3Cbr%3E%3Cbr%3EYuk%20mulai%20belanja%20sekarang%21%3C/div%3E%27%3B%0A%20%20%7Delse%7B%0A%20%20%20%20list.innerHTML%3Dentries.map%28%28%5Bid%2Cit%5D%29%3D%3E%7B%0A%20%20%20%20%20%20total+%3Dit.price*it.qty%3B%0A%20%20%20%20%20%20return%60%3Cdiv%20class%3D%22cart-item%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22cart-item-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22cart-item-title%22%3E%24%7Bit.title%7D%3C/div%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22cart-item-meta%22%3E%24%7Bfmt%28it.price%29%7D%20%D7%20%24%7Bit.qty%7D%20%3D%20%24%7Bfmt%28it.price*it.qty%29%7D%3C/div%3E%0A%20%20%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22cart-actions%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cbutton%20onclick%3D%22updateCart%28%27%24%7Bid%7D%27%2C-1%29%22%20title%3D%22Kurangi%22%3E%u2212%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cspan%20class%3D%22cart-qty%22%3E%24%7Bit.qty%7D%3C/span%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cbutton%20onclick%3D%22updateCart%28%27%24%7Bid%7D%27%2C1%29%22%20title%3D%22Tambah%22%3E+%3C/button%3E%0A%20%20%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%3C/div%3E%60%3B%0A%20%20%20%20%7D%29.join%28%27%27%29%3B%0A%20%20%7D%0A%20%20%0A%20%20%24%28%27cart-total%27%29.textContent%3Dfmt%28total%29%3B%0A%20%20%24%28%27cart-count%27%29.textContent%3Dentries.reduce%28%28a%2Cb%29%3D%3Ea+b%5B1%5D.qty%2C0%29%3B%0A%7D%0A%0Afunction%20renderDetail%28pid%29%7B%0A%20%20const%20p%3Dproducts.find%28x%3D%3Ex.id%3D%3D%3Dpid%29%3B%0A%20%20if%28%21p%29return%3B%0A%20%20%0A%20%20const%20html%3D%60%0A%20%20%20%20%3Cbutton%20class%3D%22detail-close%22%20onclick%3D%22closeDetail%28%29%22%3E%u2716%3C/button%3E%0A%20%20%20%20%3Cdiv%20class%3D%22detail-top%22%3E%0A%20%20%20%20%20%20%3Cimg%20src%3D%22%24%7Bp.img%7D%22%20alt%3D%22%24%7Bp.title%7D%22%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22detail-info%22%3E%0A%20%20%20%20%20%20%20%20%3Ch2%3E%24%7Bp.title%7D%3C/h2%3E%0A%20%20%20%20%20%20%20%20%3Cp%3E%24%7Bp.desc%7D%3C/p%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22sub-list%22%3E%0A%20%20%20%20%20%20%20%20%20%20%24%7Bp.subs.map%28s%3D%3E%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20isAdded%3DaddedItems.has%28s.id%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20return%60%3Cdiv%20class%3D%22sub-row%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22sub-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22sub-name%22%3E%24%7Bs.title%7D%3C/div%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22sub-price%22%3E%24%7Bfmt%28s.price%29%7D%3C/div%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22sub-actions%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24%7BisAdded%3F%60%3Cbutton%20class%3D%22icon-remove%22%20onclick%3D%22removeFromDetail%28%27%24%7Bs.id%7D%27%29%22%20title%3D%22Hapus%22%3E%u2716%3C/button%3E%60%3A%60%60%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22icon-add%22%20onclick%3D%22addToCart%28%27%24%7Bs.id%7D%27%2C%27%24%7Bp.title%7D%20-%20%24%7Bs.title%7D%27%2C%24%7Bs.price%7D%29%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24%7BisAdded%3F%27%u2713%20Ditambahkan%27%3A%27+%20Tambah%27%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C/button%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/div%3E%60%3B%0A%20%20%20%20%20%20%20%20%20%20%7D%29.join%28%27%27%29%7D%0A%20%20%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%20%20%3C/div%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%60%3B%0A%20%20%0A%20%20%24%28%27detail-panel%27%29.innerHTML%3Dhtml%3B%0A%20%20%24%28%27detail-panel%27%29.style.display%3D%27block%27%3B%0A%20%20setTimeout%28%28%29%3D%3E%24%28%27detail-panel%27%29.scrollIntoView%28%7Bbehavior%3A%27smooth%27%2Cblock%3A%27start%27%7D%29%2C100%29%3B%0A%7D%0A%0Afunction%20closeDetail%28%29%7B%0A%20%20%24%28%27detail-panel%27%29.style.display%3D%27none%27%3B%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CART%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Afunction%20addToCart%28id%2Ctitle%2Cprice%29%7B%0A%20%20if%28cart%5Bid%5D%29%7B%0A%20%20%20%20cart%5Bid%5D.qty++%3B%0A%20%20%7Delse%7B%0A%20%20%20%20cart%5Bid%5D%3D%7Btitle%2Cprice%2Cqty%3A1%7D%3B%0A%20%20%7D%0A%20%20addedItems.add%28id%29%3B%0A%20%20renderCart%28%29%3B%0A%20%20renderDetail%28products.find%28p%3D%3Ep.subs.some%28s%3D%3Es.id%3D%3D%3Did%29%29%3F.id%29%3B%0A%20%20showToast%28%27%u2705%20%27+title.split%28%27%20-%20%27%29%5B0%5D+%27%20ditambahkan%21%27%29%3B%0A%7D%0A%0Afunction%20removeFromDetail%28id%29%7B%0A%20%20if%28cart%5Bid%5D%29%7B%0A%20%20%20%20delete%20cart%5Bid%5D%3B%0A%20%20%20%20addedItems.delete%28id%29%3B%0A%20%20%20%20renderCart%28%29%3B%0A%20%20%20%20renderDetail%28products.find%28p%3D%3Ep.subs.some%28s%3D%3Es.id%3D%3D%3Did%29%29%3F.id%29%3B%0A%20%20%20%20showToast%28%27%uD83D%uDDD1%uFE0F%20Item%20dihapus%20dari%20keranjang%27%29%3B%0A%20%20%7D%0A%7D%0A%0Afunction%20updateCart%28id%2Cdelta%29%7B%0A%20%20if%28cart%5Bid%5D%29%7B%0A%20%20%20%20cart%5Bid%5D.qty+%3Ddelta%3B%0A%20%20%20%20if%28cart%5Bid%5D.qty%3C%3D0%29%7B%0A%20%20%20%20%20%20delete%20cart%5Bid%5D%3B%0A%20%20%20%20%20%20addedItems.delete%28id%29%3B%0A%20%20%20%20%20%20showToast%28%27%uD83D%uDDD1%uFE0F%20Item%20dihapus%27%29%3B%0A%20%20%20%20%7D%0A%20%20%20%20renderCart%28%29%3B%0A%20%20%7D%0A%7D%0A%0Afunction%20clearCart%28%29%7B%0A%20%20if%28Object.keys%28cart%29.length%3D%3D%3D0%29%7B%0A%20%20%20%20showToast%28%27%u26A0%uFE0F%20Keranjang%20sudah%20kosong%27%29%3B%0A%20%20%20%20return%3B%0A%20%20%7D%0A%20%20if%28confirm%28%27Yakin%20ingin%20menghapus%20semua%20item%3F%27%29%29%7B%0A%20%20%20%20cart%3D%7B%7D%3B%0A%20%20%20%20addedItems.clear%28%29%3B%0A%20%20%20%20renderCart%28%29%3B%0A%20%20%20%20showToast%28%27%uD83D%uDDD1%uFE0F%20Keranjang%20dikosongkan%27%29%3B%0A%20%20%7D%0A%7D%0A%0Afunction%20openCart%28%29%7B%0A%20%20renderCart%28%29%3B%0A%20%20%24%28%27cart-sidebar%27%29.classList.add%28%27active%27%29%3B%0A%7D%0A%0Afunction%20closeCart%28%29%7B%0A%20%20%24%28%27cart-sidebar%27%29.classList.remove%28%27active%27%29%3B%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CATEGORY%20%26%20SEARCH%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Afunction%20filterCategory%28id%29%7B%0A%20%20activeCategory%3Did%3B%0A%20%20renderCategories%28%29%3B%0A%20%20renderProducts%28%29%3B%0A%20%20closeDetail%28%29%3B%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20TABS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Adocument.querySelectorAll%28%27.tab-btn%5Bdata-tab%5D%27%29.forEach%28btn%3D%3E%7B%0A%20%20btn.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20%20%20document.querySelectorAll%28%27.tab-btn%5Bdata-tab%5D%27%29.forEach%28b%3D%3Eb.classList.remove%28%27active%27%29%29%3B%0A%20%20%20%20btn.classList.add%28%27active%27%29%3B%0A%20%20%20%20document.querySelectorAll%28%27%5Bid%5E%3D%22tab-%22%5D%27%29.forEach%28t%3D%3Et.style.display%3D%27none%27%29%3B%0A%20%20%20%20%24%28%27tab-%27+btn.dataset.tab%29.style.display%3D%27block%27%3B%0A%20%20%20%20closeDetail%28%29%3B%0A%20%20%7D%29%3B%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20SEARCH%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%24%28%27search%27%29.addEventListener%28%27input%27%2C%28%29%3D%3E%7B%0A%20%20renderProducts%28%29%3B%0A%20%20closeDetail%28%29%3B%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20GUIDE%20BUTTON%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%24%28%27guide-btn%27%29.addEventListener%28%27click%27%2CopenGuidePopup%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CART%20BUTTONS%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%24%28%27cart-btn%27%29.addEventListener%28%27click%27%2CopenCart%29%3B%0A%24%28%27close-cart%27%29.addEventListener%28%27click%27%2CcloseCart%29%3B%0A%24%28%27clear-cart%27%29.addEventListener%28%27click%27%2CclearCart%29%3B%0A%24%28%27checkout-btn%27%29.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20if%28Object.keys%28cart%29.length%3D%3D%3D0%29%7B%0A%20%20%20%20showToast%28%27%u26A0%uFE0F%20Keranjang%20masih%20kosong%21%27%29%3B%0A%20%20%20%20return%3B%0A%20%20%7D%0A%20%20closeCart%28%29%3B%0A%20%20%24%28%27overlay%27%29.style.display%3D%27block%27%3B%0A%20%20%24%28%27checkout-modal%27%29.style.display%3D%27block%27%3B%0A%7D%29%3B%0A%24%28%27checkout-cancel%27%29.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20%24%28%27overlay%27%29.style.display%3D%27none%27%3B%0A%20%20%24%28%27checkout-modal%27%29.style.display%3D%27none%27%3B%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20CHECKOUT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Aasync%20function%20checkout%28%29%7B%0A%20%20const%20name%3D%24%28%27buyer-name%27%29.value.trim%28%29%3B%0A%20%20const%20contact%3D%24%28%27buyer-contact%27%29.value.trim%28%29%3B%0A%20%20const%20note%3D%24%28%27buyer-note%27%29.value.trim%28%29%3B%0A%20%20const%20proof%3D%24%28%27buyer-proof%27%29.files%5B0%5D%3B%0A%20%20%0A%20%20if%28%21name%7C%7C%21contact%29%7B%0A%20%20%20%20showToast%28%27%u26A0%uFE0F%20Nama%20dan%20kontak%20wajib%20diisi%21%27%29%3B%0A%20%20%20%20return%3B%0A%20%20%7D%0A%20%20%0A%20%20const%20sendBtn%3D%24%28%27checkout-send%27%29%3B%0A%20%20sendBtn.disabled%3Dtrue%3B%0A%20%20sendBtn.textContent%3D%27%u23F3%20Mengirim...%27%3B%0A%0A%20%20let%20msg%3D%27%uD83D%uDED2%20*PESANAN%20BARU%20-%20IkkonStore*%5Cn%27%3B%0A%20%20msg+%3D%27%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%5Cn%5Cn%27%3B%0A%20%20%0A%20%20let%20total%3D0%3B%0A%20%20Object.values%28cart%29.forEach%28it%3D%3E%7B%0A%20%20%20%20const%20subtotal%3Dit.price*it.qty%3B%0A%20%20%20%20total+%3Dsubtotal%3B%0A%20%20%20%20msg+%3D%60%uD83D%uDCE6%20*%24%7Bit.title%7D*%5Cn%60%3B%0A%20%20%20%20msg+%3D%60%20%20%20%24%7Bit.qty%7D%20%D7%20%24%7Bfmt%28it.price%29%7D%20%3D%20*%24%7Bfmt%28subtotal%29%7D*%5Cn%5Cn%60%3B%0A%20%20%7D%29%3B%0A%20%20%0A%20%20msg+%3D%27%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%5Cn%27%3B%0A%20%20msg+%3D%60%uD83D%uDCB0%20*TOTAL%3A%20%24%7Bfmt%28total%29%7D*%5Cn%60%3B%0A%20%20msg+%3D%27%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%u2501%5Cn%5Cn%27%3B%0A%20%20msg+%3D%60%uD83D%uDC64%20*Nama*%3A%20%24%7Bname%7D%5Cn%60%3B%0A%20%20msg+%3D%60%uD83D%uDCF1%20*Kontak*%3A%20%24%7Bcontact%7D%5Cn%60%3B%0A%20%20if%28note%29msg+%3D%60%uD83D%uDCDD%20*Catatan/Alamat*%3A%5Cn%24%7Bnote%7D%5Cn%60%3B%0A%20%20msg+%3D%60%5Cn%u23F0%20%24%7Bnew%20Date%28%29.toLocaleString%28%27id-ID%27%2C%7BdateStyle%3A%27full%27%2CtimeStyle%3A%27short%27%7D%29%7D%60%3B%0A%20%20%0A%20%20try%7B%0A%20%20%20%20const%20textResponse%3Dawait%20fetch%28%60https%3A//api.telegram.org/bot%24%7BTELEGRAM_BOT_TOKEN%7D/sendMessage%60%2C%7B%0A%20%20%20%20%20%20method%3A%27POST%27%2C%0A%20%20%20%20%20%20headers%3A%7B%27Content-Type%27%3A%27application/json%27%7D%2C%0A%20%20%20%20%20%20body%3AJSON.stringify%28%7B%0A%20%20%20%20%20%20%20%20chat_id%3ATELEGRAM_CHAT_ID%2C%0A%20%20%20%20%20%20%20%20text%3Amsg%2C%0A%20%20%20%20%20%20%20%20parse_mode%3A%27Markdown%27%0A%20%20%20%20%20%20%7D%29%0A%20%20%20%20%7D%29%3B%0A%20%20%20%20%0A%20%20%20%20const%20textResult%3Dawait%20textResponse.json%28%29%3B%0A%20%20%20%20%0A%20%20%20%20if%28%21textResult.ok%29%7B%0A%20%20%20%20%20%20throw%20new%20Error%28%27Gagal%20mengirim%20pesan%27%29%3B%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20if%28proof%29%7B%0A%20%20%20%20%20%20const%20form%3Dnew%20FormData%28%29%3B%0A%20%20%20%20%20%20form.append%28%27chat_id%27%2CTELEGRAM_CHAT_ID%29%3B%0A%20%20%20%20%20%20form.append%28%27photo%27%2Cproof%29%3B%0A%20%20%20%20%20%20form.append%28%27caption%27%2C%60%uD83D%uDCB3%20Bukti%20Pembayaran%20-%20IkkonStore%5Cn%uD83D%uDC64%20%24%7Bname%7D%5Cn%uD83D%uDCF1%20%24%7Bcontact%7D%60%29%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20await%20fetch%28%60https%3A//api.telegram.org/bot%24%7BTELEGRAM_BOT_TOKEN%7D/sendPhoto%60%2C%7B%0A%20%20%20%20%20%20%20%20method%3A%27POST%27%2C%0A%20%20%20%20%20%20%20%20body%3Aform%0A%20%20%20%20%20%20%7D%29%3B%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20showToast%28%27%u2705%20Pesanan%20berhasil%20dikirim%21%20Admin%20akan%20segera%20menghubungi.%27%29%3B%0A%20%20%20%20%0A%20%20%20%20setTimeout%28%28%29%3D%3E%7B%0A%20%20%20%20%20%20%24%28%27overlay%27%29.style.display%3D%27none%27%3B%0A%20%20%20%20%20%20%24%28%27checkout-modal%27%29.style.display%3D%27none%27%3B%0A%20%20%20%20%20%20%24%28%27buyer-name%27%29.value%3D%27%27%3B%0A%20%20%20%20%20%20%24%28%27buyer-contact%27%29.value%3D%27%27%3B%0A%20%20%20%20%20%20%24%28%27buyer-note%27%29.value%3D%27%27%3B%0A%20%20%20%20%20%20%24%28%27buyer-proof%27%29.value%3D%27%27%3B%0A%20%20%20%20%20%20cart%3D%7B%7D%3B%0A%20%20%20%20%20%20addedItems.clear%28%29%3B%0A%20%20%20%20%20%20renderCart%28%29%3B%0A%20%20%20%20%20%20closeCart%28%29%3B%0A%20%20%20%20%7D%2C2000%29%3B%0A%20%20%20%20%0A%20%20%7Dcatch%28error%29%7B%0A%20%20%20%20console.error%28%27Error%3A%27%2Cerror%29%3B%0A%20%20%20%20showToast%28%27%u274C%20Gagal%20mengirim%20pesanan.%20Periksa%20koneksi%21%27%29%3B%0A%20%20%7Dfinally%7B%0A%20%20%20%20sendBtn.disabled%3Dfalse%3B%0A%20%20%20%20sendBtn.textContent%3D%27Kirim%27%3B%0A%20%20%7D%0A%7D%0A%0A%24%28%27checkout-send%27%29.addEventListener%28%27click%27%2Ccheckout%29%3B%0A%0A%24%28%27overlay%27%29.addEventListener%28%27click%27%2C%28e%29%3D%3E%7B%0A%20%20if%28e.target.id%3D%3D%3D%27overlay%27%29%7B%0A%20%20%20%20%24%28%27overlay%27%29.style.display%3D%27none%27%3B%0A%20%20%20%20%24%28%27checkout-modal%27%29.style.display%3D%27none%27%3B%0A%20%20%20%20%24%28%27guide-popup%27%29.classList.remove%28%27active%27%29%3B%0A%20%20%7D%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20IMAGE%20MODAL%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%24%28%27qris-preview%27%29.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20%24%28%27modal-image%27%29.src%3DQRIS_IMAGE_URL%3B%0A%20%20%24%28%27image-modal%27%29.classList.add%28%27active%27%29%3B%0A%7D%29%3B%0A%0A%24%28%27image-modal-close%27%29.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20%24%28%27image-modal%27%29.classList.remove%28%27active%27%29%3B%0A%7D%29%3B%0A%0A%24%28%27image-modal%27%29.addEventListener%28%27click%27%2C%28e%29%3D%3E%7B%0A%20%20if%28e.target.id%3D%3D%3D%27image-modal%27%29%7B%0A%20%20%20%20%24%28%27image-modal%27%29.classList.remove%28%27active%27%29%3B%0A%20%20%7D%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20COPY%20PAYMENT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Adocument.querySelectorAll%28%27.copy-btn%27%29.forEach%28btn%3D%3E%7B%0A%20%20btn.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20%20%20navigator.clipboard.writeText%28btn.dataset.number%29%3B%0A%20%20%20%20showToast%28%60%u2705%20Nomor%20%24%7Bbtn.dataset.name%7D%20berhasil%20disalin%21%60%29%3B%0A%20%20%7D%29%3B%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20THEME%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Aconst%20themeBtn%3D%24%28%27theme-btn%27%29%3B%0Alet%20isDark%3Dwindow.matchMedia%26%26window.matchMedia%28%27%28prefers-color-scheme%3A%20dark%29%27%29.matches%3B%0A%0Aif%28localStorage.getItem%28%27theme%27%29%29%7B%0A%20%20isDark%3DlocalStorage.getItem%28%27theme%27%29%3D%3D%3D%27dark%27%3B%0A%7D%0A%0Afunction%20applyTheme%28%29%7B%0A%20%20if%28isDark%29%7B%0A%20%20%20%20document.documentElement.setAttribute%28%27data-theme%27%2C%27dark%27%29%3B%0A%20%20%20%20themeBtn.innerHTML%3D%27%u2600%uFE0F%27%3B%0A%20%20%7Delse%7B%0A%20%20%20%20document.documentElement.removeAttribute%28%27data-theme%27%29%3B%0A%20%20%20%20themeBtn.innerHTML%3D%27%uD83C%uDF19%27%3B%0A%20%20%7D%0A%7D%0A%0AapplyTheme%28%29%3B%0A%0AthemeBtn.addEventListener%28%27click%27%2C%28%29%3D%3E%7B%0A%20%20isDark%3D%21isDark%3B%0A%20%20localStorage.setItem%28%27theme%27%2CisDark%3F%27dark%27%3A%27light%27%29%3B%0A%20%20applyTheme%28%29%3B%0A%20%20showToast%28isDark%3F%27%uD83C%uDF19%20Mode%20gelap%20aktif%27%3A%27%u2600%uFE0F%20Mode%20terang%20aktif%27%29%3B%0A%7D%29%3B%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20DETAIL%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Afunction%20openDetail%28pid%29%7B%0A%20%20renderDetail%28pid%29%3B%0A%7D%0A%0A//%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%20INIT%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0Awindow.addEventListener%28%27load%27%2C%28%29%3D%3E%7B%0A%20%20renderCategories%28%29%3B%0A%20%20renderProducts%28%29%3B%0A%20%20showWelcomeGuide%28%29%3B%0A%7D%29%3B%0A%3C/script%3E%0A%3C/body%3E%0A%3C/html%3E'));
+// ========== DATA PRODUK ========== 
+const productsWebA = [
+  {
+    id: 1,
+    name: 'Tas Kulit Premium',
+    price: 'Rp 450.000',
+    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop',
+    desc: 'Tas kulit asli dengan desain elegan dan modern',
+    features: ['Kulit asli 100%', 'Banyak kompartemen', 'Tahan air', 'Garansi 1 tahun']
+  },
+  {
+    id: 2,
+    name: 'Sepatu Sneakers Sport',
+    price: 'Rp 350.000',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
+    desc: 'Sepatu olahraga nyaman untuk aktivitas sehari-hari',
+    features: ['Bahan breathable', 'Sol anti slip', 'Ringan dan nyaman', 'Desain trendy']
+  },
+  {
+    id: 3,
+    name: 'Jam Tangan Klasik',
+    price: 'Rp 750.000',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
+    desc: 'Jam tangan klasik dengan mesin Jepang berkualitas',
+    features: ['Mesin Jepang', 'Tali stainless steel', 'Water resistant', 'Elegant design']
+  },
+  {
+    id: 4,
+    name: 'Kacamata Fashion',
+    price: 'Rp 250.000',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
+    desc: 'Kacamata fashion dengan lensa UV protection',
+    features: ['UV Protection', 'Frame titanium', 'Anti scratch', 'Desain modern']
+  }
+];
+
+const productsWebB = [
+  {
+    id: 5,
+    name: 'Laptop Gaming Pro',
+    price: 'Rp 15.000.000',
+    image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop',
+    desc: 'Laptop gaming dengan performa maksimal',
+    features: ['Processor i7 Gen 12', 'RAM 16GB', 'SSD 512GB', 'RTX 3060 6GB']
+  },
+  {
+    id: 6,
+    name: 'Smartphone Flagship',
+    price: 'Rp 8.500.000',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
+    desc: 'Smartphone flagship dengan kamera 108MP',
+    features: ['Kamera 108MP', 'Layar AMOLED', 'Fast charging 65W', 'Baterai 5000mAh']
+  },
+  {
+    id: 7,
+    name: 'Headphone Wireless',
+    price: 'Rp 1.200.000',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+    desc: 'Headphone wireless dengan noise cancelling',
+    features: ['Active Noise Cancelling', 'Bluetooth 5.0', 'Battery 30 jam', 'Sound premium']
+  },
+  {
+    id: 8,
+    name: 'Smart Watch Series X',
+    price: 'Rp 3.500.000',
+    image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=400&fit=crop',
+    desc: 'Smartwatch dengan fitur kesehatan lengkap',
+    features: ['Heart rate monitor', 'GPS tracking', 'Water resistant', 'Battery 2 hari']
+  }
+];
+
+// ========== STATE ========== 
+let currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateThemeIcons();
+
+// ========== NAVIGATION ========== 
+function navigateTo(sectionId) {
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.remove('active');
+  });
+  document.getElementById(sectionId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== THEME TOGGLE ========== 
+function toggleTheme() {
+  currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  localStorage.setItem('theme', currentTheme);
+  updateThemeIcons();
+}
+
+function updateThemeIcons() {
+  const icon = currentTheme === 'light' ? '🌙' : '☀️';
+  const iconA = document.getElementById('theme-icon-a');
+  const iconB = document.getElementById('theme-icon-b');
+  if (iconA) iconA.textContent = icon;
+  if (iconB) iconB.textContent = icon;
+}
+
+// ========== RENDER PRODUCTS ========== 
+function renderProducts(products, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = products.map(product => `
+    <div class="product-card" onclick="openModal(${product.id}, '${containerId}')">
+      <img src="${product.image}" alt="${product.name}" class="product-image">
+      <div class="product-info">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">${product.price}</div>
+        <div class="product-desc">${product.desc}</div>
+        <button class="btn btn-primary" onclick="event.stopPropagation(); buyProduct()">
+          🛒 Beli Sekarang
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== MODAL ========== 
+function openModal(productId, source) {
+  const products = source === 'products-a' ? productsWebA : productsWebB;
+  const product = products.find(p => p.id === productId);
+  
+  if (product) {
+    document.getElementById('modal-img').src = product.image;
+    document.getElementById('modal-name').textContent = product.name;
+    document.getElementById('modal-price').textContent = product.price;
+    document.getElementById('modal-desc').textContent = product.desc;
+    document.getElementById('modal-features').innerHTML = product.features
+      .map(f => `<li>${f}</li>`).join('');
+    
+    document.getElementById('modal').classList.add('active');
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+function buyProduct() {
+  alert('🎉 Terima kasih! Fitur pembelian akan segera tersedia.');
+  closeModal();
+}
+
+// ========== CLOSE MODAL ON OUTSIDE CLICK ========== 
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target.id === 'modal') {
+    closeModal();
+  }
+});
+
+// ========== INIT ========== 
+renderProducts(productsWebA, 'products-a');
+renderProducts(productsWebB, 'products-b');
 </script>
+
+</body>
+</html>
