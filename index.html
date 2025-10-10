@@ -537,6 +537,167 @@ body {
 </head>
 <body data-theme="light">
 
+<!-- SCRIPT DI ATAS AGAR FUNGSI TERSEDIA SAAT ONCLICK DIPANGGIL -->
+<script>
+// ========== DATA PRODUK ========== 
+const productsWebA = [
+  {
+    id: 1,
+    name: 'Tas Kulit Premium',
+    price: 'Rp 450.000',
+    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop',
+    desc: 'Tas kulit asli dengan desain elegan dan modern',
+    features: ['Kulit asli 100%', 'Banyak kompartemen', 'Tahan air', 'Garansi 1 tahun']
+  },
+  {
+    id: 2,
+    name: 'Sepatu Sneakers Sport',
+    price: 'Rp 350.000',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
+    desc: 'Sepatu olahraga nyaman untuk aktivitas sehari-hari',
+    features: ['Bahan breathable', 'Sol anti slip', 'Ringan dan nyaman', 'Desain trendy']
+  },
+  {
+    id: 3,
+    name: 'Jam Tangan Klasik',
+    price: 'Rp 750.000',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
+    desc: 'Jam tangan klasik dengan mesin Jepang berkualitas',
+    features: ['Mesin Jepang', 'Tali stainless steel', 'Water resistant', 'Elegant design']
+  },
+  {
+    id: 4,
+    name: 'Kacamata Fashion',
+    price: 'Rp 250.000',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
+    desc: 'Kacamata fashion dengan lensa UV protection',
+    features: ['UV Protection', 'Frame titanium', 'Anti scratch', 'Desain modern']
+  }
+];
+
+const productsWebB = [
+  {
+    id: 5,
+    name: 'Laptop Gaming Pro',
+    price: 'Rp 15.000.000',
+    image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop',
+    desc: 'Laptop gaming dengan performa maksimal',
+    features: ['Processor i7 Gen 12', 'RAM 16GB', 'SSD 512GB', 'RTX 3060 6GB']
+  },
+  {
+    id: 6,
+    name: 'Smartphone Flagship',
+    price: 'Rp 8.500.000',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
+    desc: 'Smartphone flagship dengan kamera 108MP',
+    features: ['Kamera 108MP', 'Layar AMOLED', 'Fast charging 65W', 'Baterai 5000mAh']
+  },
+  {
+    id: 7,
+    name: 'Headphone Wireless',
+    price: 'Rp 1.200.000',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+    desc: 'Headphone wireless dengan noise cancelling',
+    features: ['Active Noise Cancelling', 'Bluetooth 5.0', 'Battery 30 jam', 'Sound premium']
+  },
+  {
+    id: 8,
+    name: 'Smart Watch Series X',
+    price: 'Rp 3.500.000',
+    image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=400&fit=crop',
+    desc: 'Smartwatch dengan fitur kesehatan lengkap',
+    features: ['Heart rate monitor', 'GPS tracking', 'Water resistant', 'Battery 2 hari']
+  }
+];
+
+// ========== STATE ========== 
+let currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+// ========== NAVIGATION ========== 
+function navigateTo(sectionId) {
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.remove('active');
+  });
+  document.getElementById(sectionId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== THEME TOGGLE ========== 
+function toggleTheme() {
+  currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  localStorage.setItem('theme', currentTheme);
+  updateThemeIcons();
+}
+
+function updateThemeIcons() {
+  const icon = currentTheme === 'light' ? '🌙' : '☀️';
+  const iconA = document.getElementById('theme-icon-a');
+  const iconB = document.getElementById('theme-icon-b');
+  if (iconA) iconA.textContent = icon;
+  if (iconB) iconB.textContent = icon;
+}
+
+// ========== RENDER PRODUCTS ========== 
+function renderProducts(products, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = products.map(product => `
+    <div class="product-card" onclick="openModal(${product.id}, '${containerId}')">
+      <img src="${product.image}" alt="${product.name}" class="product-image">
+      <div class="product-info">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">${product.price}</div>
+        <div class="product-desc">${product.desc}</div>
+        <button class="btn btn-primary" onclick="event.stopPropagation(); buyProduct()">
+          🛒 Beli Sekarang
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== MODAL ========== 
+function openModal(productId, source) {
+  const products = source === 'products-a' ? productsWebA : productsWebB;
+  const product = products.find(p => p.id === productId);
+  
+  if (product) {
+    document.getElementById('modal-img').src = product.image;
+    document.getElementById('modal-name').textContent = product.name;
+    document.getElementById('modal-price').textContent = product.price;
+    document.getElementById('modal-desc').textContent = product.desc;
+    document.getElementById('modal-features').innerHTML = product.features
+      .map(f => `<li>${f}</li>`).join('');
+    
+    document.getElementById('modal').classList.add('active');
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+function buyProduct() {
+  alert('🎉 Terima kasih! Fitur pembelian akan segera tersedia.');
+  closeModal();
+}
+
+// ========== INIT SAAT HALAMAN DIMUAT ========== 
+window.addEventListener('DOMContentLoaded', function() {
+  updateThemeIcons();
+  renderProducts(productsWebA, 'products-a');
+  renderProducts(productsWebB, 'products-b');
+  
+  // Close modal on outside click
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') {
+      closeModal();
+    }
+  });
+});
+</script>
+
 <!-- ========== LANDING SECTION ========== -->
 <div id="landing" class="section active landing">
   <div class="landing-content">
@@ -632,164 +793,6 @@ body {
     </div>
   </div>
 </div>
-
-<script>
-// ========== DATA PRODUK ========== 
-const productsWebA = [
-  {
-    id: 1,
-    name: 'Tas Kulit Premium',
-    price: 'Rp 450.000',
-    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop',
-    desc: 'Tas kulit asli dengan desain elegan dan modern',
-    features: ['Kulit asli 100%', 'Banyak kompartemen', 'Tahan air', 'Garansi 1 tahun']
-  },
-  {
-    id: 2,
-    name: 'Sepatu Sneakers Sport',
-    price: 'Rp 350.000',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
-    desc: 'Sepatu olahraga nyaman untuk aktivitas sehari-hari',
-    features: ['Bahan breathable', 'Sol anti slip', 'Ringan dan nyaman', 'Desain trendy']
-  },
-  {
-    id: 3,
-    name: 'Jam Tangan Klasik',
-    price: 'Rp 750.000',
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
-    desc: 'Jam tangan klasik dengan mesin Jepang berkualitas',
-    features: ['Mesin Jepang', 'Tali stainless steel', 'Water resistant', 'Elegant design']
-  },
-  {
-    id: 4,
-    name: 'Kacamata Fashion',
-    price: 'Rp 250.000',
-    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
-    desc: 'Kacamata fashion dengan lensa UV protection',
-    features: ['UV Protection', 'Frame titanium', 'Anti scratch', 'Desain modern']
-  }
-];
-
-const productsWebB = [
-  {
-    id: 5,
-    name: 'Laptop Gaming Pro',
-    price: 'Rp 15.000.000',
-    image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop',
-    desc: 'Laptop gaming dengan performa maksimal',
-    features: ['Processor i7 Gen 12', 'RAM 16GB', 'SSD 512GB', 'RTX 3060 6GB']
-  },
-  {
-    id: 6,
-    name: 'Smartphone Flagship',
-    price: 'Rp 8.500.000',
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop',
-    desc: 'Smartphone flagship dengan kamera 108MP',
-    features: ['Kamera 108MP', 'Layar AMOLED', 'Fast charging 65W', 'Baterai 5000mAh']
-  },
-  {
-    id: 7,
-    name: 'Headphone Wireless',
-    price: 'Rp 1.200.000',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
-    desc: 'Headphone wireless dengan noise cancelling',
-    features: ['Active Noise Cancelling', 'Bluetooth 5.0', 'Battery 30 jam', 'Sound premium']
-  },
-  {
-    id: 8,
-    name: 'Smart Watch Series X',
-    price: 'Rp 3.500.000',
-    image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=400&fit=crop',
-    desc: 'Smartwatch dengan fitur kesehatan lengkap',
-    features: ['Heart rate monitor', 'GPS tracking', 'Water resistant', 'Battery 2 hari']
-  }
-];
-
-// ========== STATE ========== 
-let currentTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', currentTheme);
-updateThemeIcons();
-
-// ========== NAVIGATION ========== 
-function navigateTo(sectionId) {
-  document.querySelectorAll('.section').forEach(section => {
-    section.classList.remove('active');
-  });
-  document.getElementById(sectionId).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ========== THEME TOGGLE ========== 
-function toggleTheme() {
-  currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', currentTheme);
-  localStorage.setItem('theme', currentTheme);
-  updateThemeIcons();
-}
-
-function updateThemeIcons() {
-  const icon = currentTheme === 'light' ? '🌙' : '☀️';
-  const iconA = document.getElementById('theme-icon-a');
-  const iconB = document.getElementById('theme-icon-b');
-  if (iconA) iconA.textContent = icon;
-  if (iconB) iconB.textContent = icon;
-}
-
-// ========== RENDER PRODUCTS ========== 
-function renderProducts(products, containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = products.map(product => `
-    <div class="product-card" onclick="openModal(${product.id}, '${containerId}')">
-      <img src="${product.image}" alt="${product.name}" class="product-image">
-      <div class="product-info">
-        <div class="product-name">${product.name}</div>
-        <div class="product-price">${product.price}</div>
-        <div class="product-desc">${product.desc}</div>
-        <button class="btn btn-primary" onclick="event.stopPropagation(); buyProduct()">
-          🛒 Beli Sekarang
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ========== MODAL ========== 
-function openModal(productId, source) {
-  const products = source === 'products-a' ? productsWebA : productsWebB;
-  const product = products.find(p => p.id === productId);
-  
-  if (product) {
-    document.getElementById('modal-img').src = product.image;
-    document.getElementById('modal-name').textContent = product.name;
-    document.getElementById('modal-price').textContent = product.price;
-    document.getElementById('modal-desc').textContent = product.desc;
-    document.getElementById('modal-features').innerHTML = product.features
-      .map(f => `<li>${f}</li>`).join('');
-    
-    document.getElementById('modal').classList.add('active');
-  }
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('active');
-}
-
-function buyProduct() {
-  alert('🎉 Terima kasih! Fitur pembelian akan segera tersedia.');
-  closeModal();
-}
-
-// ========== CLOSE MODAL ON OUTSIDE CLICK ========== 
-document.getElementById('modal').addEventListener('click', (e) => {
-  if (e.target.id === 'modal') {
-    closeModal();
-  }
-});
-
-// ========== INIT ========== 
-renderProducts(productsWebA, 'products-a');
-renderProducts(productsWebB, 'products-b');
-</script>
 
 </body>
 </html>
